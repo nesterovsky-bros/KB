@@ -227,7 +227,7 @@ return
   where 
     (PropertyID = Data.GetPropertyID('22-rdf-syntax-ns#type_label')) and
     (TextValue = 'actor');</pre></blockquote>
-<ul><li>Define a predicate like this:</li>  </ol>
+<ul><li>Define a predicate like this:</li></ul>
 <blockquote><pre>execute Data.DefinePredicate
   @name = 'IsActor', 
   @expression = 'Data.Predicate_IsActor()';</pre></blockquote>
