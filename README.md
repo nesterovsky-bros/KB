@@ -5,7 +5,7 @@
     </head>
 <body>
 
-  <p>Akinator like engine</p>
+  <h1>Akinator like engine</h1>
   <p>A collegue has approached to us with a question on how <a href="http://en.akinator.com/">Akinator</a> engine may work. </p>
   <p>To our shame we have never heard about this amazing game before. To fill the gap we have immediately started to play it, and have identified it as a <a href="https://en.wikipedia.org/wiki/Troubleshooting">Troubleshooting</a> solver.</p>
   <p>It took us a couple of minutes to come up with a brilliant solution: "We just need to google and find the engine in the internet". :-)</p>
