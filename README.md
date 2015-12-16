@@ -520,7 +520,7 @@ select top(5) * from P order by Weight desc, abs(TotalCount - EntityCount * 2);<
 <blockquote><pre>select * from E;</pre></blockquote>
 <p>We might want to join those selects with <code>Data.Property</code> table to bring some entity properties, like name, or description.</p>
 <h4>Implementation of algorithm</h4>
-<p>Algorithm is clear. The deal is just to implement it. We can see that the structure of select depends considerably on number of questions and type of answers. </p>
+<p>Now algorithm is clear. The deal is just to implement it. We can see that the structure of select depends considerably on number of questions and type of answers. </p>
 <p>To deal with this we use dynamic SQL. In the past we wrote an article on "<a href="http://www.nesterovsky-bros.com/weblog/2014/02/11/DealingWithDynamicSQLInSQLServer.aspx">Dealing with dynamic SQL in SQL Server</a>".</p>
 <p>The idea was to use XQuery as a SQL template language. At first you might think that this is too radical step but after a close look you will observe that it might be the most straightforward solution to deal with dynamic SQL. Just consider an XQuery snapshot that builds <code>"Pi as (...), ..."</code> text:</p>
 <blockquote><pre>'&lt;sql>with &lt;/sql>,
@@ -535,15 +535,7 @@ return
   select EntityID from Data.Predicate where PredicateID = &lt;string>{$predicateID}&lt;/string>
 ),
 &lt;/sql>'</pre></blockquote>
-<p>The input for such dynamic SQL is passed in the form of xml like this:</p>
-<blockquote><pre>&lt;request>
-  &lt;question name="IsLivingPerson" answer="1"/>
-  &lt;question name="IsFootballPlayer" answer="0"/>
-  &lt;question name="IsArtist" answer="0.3"/>
-  ...
-&lt;request>
-</pre></blockquote>
-<p>We have defined two more SQL functions that build SQL text for such input xml:</p>
+<p>We have defined two SQL functions that build SQL text for such input xml:</p>
 <blockquote><pre>create function Dynamic.GetSQL_GetNextPredicate
 (
   -- Request parameters.
@@ -557,7 +549,7 @@ create function Dynamic.GetSQL_GetEntities
   -- Optional property value to return.
   @property nvarchar(128)
 );</pre></blockquote>
-<p>and two more stored procedures that offers new predicate, and gets matched entities:</p>
+<p>and two more stored procedures one that offers new predicates, and the other that returns matched entities:</p>
 <blockquote><pre>-- Gets next predicates
 create procedure Data.GetNextPredicates
 (
@@ -575,48 +567,58 @@ create procedure Data.GetEntities
   -- Optional property value to return.
   @property nvarchar(128)
 );</pre></blockquote>
-<p>First procedure returns an xml result fragment with next suggested predicates in form:</p>
+<p>The input for these procedures are in the form of xml like this:</p>
+<blockquote><pre>&lt;request>
+  &lt;question name="IsLivingPerson" answer="1"/>
+  &lt;question name="IsFootballPlayer" answer="0"/>
+  &lt;question name="IsArtist" answer="0.3"/>
+  ...
+&lt;request>
+</pre></blockquote>
+<p><code>Data.GetNextPredicates</code> returns an xml result fragment with next suggested predicates in the form:</p>
 <blockquote><pre>&lt;question name="IsPolitician"/>
 &lt;question name="IsReligious"/>
 &lt;question name="IsMilitary"/>
 </pre></blockquote>
-<p>The second procedure return a result set of entities with possible value of some property (like name or description).</p>
+<p><code>Data.GetEntities</code> returns a set of entities with possible value of some property (like name or description).</p>
 <h4>Cache of results</h4>
-<p>At this point we could complete our explanation of the algorithm and its implementation, especially taking into account that performance results over test data (which is more than 1.5 million of entities), are very good. Indeed, SQL building takes on average up to 100ms, and an execution of the select takes from dozens milliseconds up to 3 - 4 seconds. Execution plans looks good, and there are no bottlenecks for scalability.</p>
-<p>But we have thought that we can do better! According to the algorithm there are just several best predicates on the top level; there are also not too many best predicates on the second level, and so on. We have estimated that we can easily cache different results for all requests, say, for up to ten or even more input predicates. This means that we can immediately give answers to different sets of inputs, and descend to a rather small set of remaining entities. On the remaining set a regular, even non-caching, search works very fast.</p>
-<p>So, we will continue. :-)</p>
+<p>At this point we could complete our explanation of the algorithm and its implementation, especially taking into account that performance over test data, which is more than 1.5 million of entities, are very good. Indeed, it take 100ms on average to build SQL, and from dozens milliseconds and up to 3 - 4 seconds to run the query. Execution plans look good, and there are no bottlenecks for scalability.</p>
+<p>But we have thought that we can do better! According to the algorithm there are just several best predicates on the top level; there are also not too many best predicates on the second level, and so on. We have estimated that we can cache different results for all requests, say, for up to ten or even more input predicates. This means that we can immediately give answers to different sets of inputs, and descend to a rather small set of remaining entities. On the remaining set, a regular, even non-cached, search works very fast.</p>
+<p>So, we will continue.</p>
 <h4>Caching implementation</h4>
-<p>Let's assume we have a table that caches result of search of P(i), A(i), where i = 1..n-1, which offers a next predicate P(n); and let's result is cached by ID(n).</p>
-<p>By induction next offers ID(n+1) can be identified by ID(n) - previous offer, different answers A(n), and next predicates P(n+1).</p>
+<p>We cache search offers in a tree. Each node in this tree:
+<ul>
+  <li>has a node identifier;</li>
+  <li>refers to the parent node (parent offer); and</li>
+  <li>is classified with answer to the parent offer, and with new offered predicate.</li>
+</ul>
 <p>This way cache table can defined like this:</p>
 <blockquote><pre>create table Data.PredicateTree
 (
-  ID int not null constraint DF_PredicateTree_ID 
-    default next value for Data.PredicateTreeID,
+  ID int not null primary key,
   ParentID int not null,
   Answer decimal(2, 1) not null,
   PredicateID hierarchyid null,
   Populated bit not null default 0,
-
-  constraint PK_PredicateTree primary key(ID),
   constraint IX_PredicateTree unique(ParentID, Answer, PredicateID)
-    include Populated
 );</pre></blockquote>
 <p>where</p>
 <ul>
-  <li><code>ID</code> - an identifier of a search result.</li>
-  <li><code>ParentID</code> - reference to a parent search result.</li>
-  <li><code>Answer</code> - answer to the parent search result.</li>
+  <li><code>ID</code> - a node identifier.</li>
+  <li><code>ParentID</code> - reference to a parent node.</li>
+  <li><code>Answer</code> - answer to the parent offer.</li>
   <li><code>PredicateID</code> - offered predicate; when value is null then this search brings no next predicate.</li>
   <li><code>Populated</code> - indicates whether it is a populated search result (1), or it is a row inserted to populate a descendant search result.</li>
 </ul>
 <h4>How caching works</h4>
-<p>Caching is integrated into the procedure Data.GetNextPredicates.</p>
+<p>Caching is integrated into the procedure <code>Data.GetNextPredicates</code>.</p>
 <ol>
-  <li>When the <code>GetNextPredicates</code> is called, request's questions are sorted by <code>PredicateID</code>. This is to reduce a number of permutations to store in the cache. This can be done, as an offer does not depend on order of questions but on whole set of questions.</li>
-  <li><code>PredicateTree</code> is checked to find a row that corresponds to a sequence of predicates with answers.</li>
-  <li>If such row is found then offered predicates are returned.</li>
-  <li>Otherwise regular search is done with results are cached into the <code>PredicateTree</code>.</li>
+  <li>When the <code>GetNextPredicates</code> is called, request's questions are sorted by <code>PredicateID</code>. This is to reduce a number of permutations to store in the cache. This can be done, as an offer does not depend on order of questions but on whole set of questions only.</li>
+  <li><code>PredicateTree</code> is checked to find a node that corresponds requested questions with answers.</li>
+  <li>If such node is found then offered predicates are returned.</li>
+  <li>Otherwise regular search is done, and results are cached into the <code>PredicateTree</code>.</li>
 </ol>
-<h4>Play search to populate cache</h4>
-<p>Having a specific entity we can query all predicates the entity belongs to, and to start playing iteratively executing <code>Data.GetNextPredicates</code>. and answering the question. This is what <code>Data.PlaySearch</code> procedure is duing. Except debugging purposes this method populates the search cache.</p>
+<h4>Play the search</h4>
+<p>We can guess a specific entity and start playing executing <code>Data.GetNextPredicates</code> iteratively and answering offered questions.</p>
+<p>This way we shall reach to the point where no more predicates are offered. This way procedures either localized a minimal subset of entities or found required entity itself.</p>
+<p>We have defined a procedure <code>Data.PlaySearch</code> that does exactly this. It plays the game. Among other roles this procedure populates the search cache.</p>
