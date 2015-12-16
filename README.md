@@ -1,6 +1,6 @@
 <h1>Akinator like engine</h1>
-<p>A collegue has approached to us with a question on how <a href="http://en.akinator.com/">Akinator</a> engine may work. </p>
-<p>To our shame we have never heard about this amazing game before. To fill the gap we have immediately started to play it, and have identified it as a <a href="https://en.wikipedia.org/wiki/Troubleshooting">Troubleshooting</a> solver.</p>
+<p>A collegue has approached to us with a question on how <a href="http://en.akinator.com/" target="_blank">Akinator</a> engine may work. </p>
+<p>To our shame we have never heard about this amazing game before. To fill the gap we have immediately started to play it, and have identified it as a <a href="https://en.wikipedia.org/wiki/Troubleshooting" target="_blank">Troubleshooting</a> solver.</p>
 <p>It took us a couple of minutes to come up with a brilliant solution: "We just need to google and find the engine in the internet". :-)</p>
 <p>Unfortunately, this led to nowhere, as no Akinator itself is open sourced, and no other good quality open source solutions are available.</p>
 <p>After another hour we have got two more ideas:</p>
@@ -37,9 +37,9 @@
   <li><code>Property</code> - to define properties per entity.</li>
 </ul>
 <h4>Test data</h4>
-<p>Samples are required to evaluate the quality of the implementation. It took awhile to find such a data, mainly due to the problem with formulation of the search query. We have found the <a href="http://wiki.dbpedia.org/">DBpedia</a> - <em>a crowd-sourced community effort to extract structured information from Wikipedia and make this information available on the Web.</em> </p>
-<p>Many interesting datasets are collected there. We have decided to try <a href="http://web.informatik.uni-mannheim.de/DBpediaAsTables/csv/Person.csv.gz">Person</a> dataset, which we got in cvs format from <a href="http://web.informatik.uni-mannheim.de/DBpediaAsTables/DBpediaClasses.htm">http://web.informatik.uni-mannheim.de/DBpediaAsTables/DBpediaClasses.htm</a>. It contains information for more than 1.5 million persons, with several hundreds of different types of properties.</p>
-<p>Through a sequence of simple manipulations (see later TODO:) we have imported this cvs into <code>PropertyType</code> and into <code>Property</code> tables.</p>
+<p>Samples are required to evaluate the quality of the implementation. It took awhile to find such a data, mainly due to the problem with formulation of the search query. We have found the <a href="http://wiki.dbpedia.org/" target="_blank">DBpedia</a> - <em>a crowd-sourced community effort to extract structured information from Wikipedia and make this information available on the Web.</em> </p>
+<p>Many interesting datasets are collected there. We have decided to try <a href="http://web.informatik.uni-mannheim.de/DBpediaAsTables/csv/Person.csv.gz">Person</a> dataset, which we got in cvs format from <a href="http://web.informatik.uni-mannheim.de/DBpediaAsTables/DBpediaClasses.htm" target="_blank">http://web.informatik.uni-mannheim.de/DBpediaAsTables/DBpediaClasses.htm</a>. It contains information for more than 1.5 million persons, with several hundreds of different types of properties.</p>
+<p>Through a sequence of simple manipulations (see later in <a href="https://github.com/nesterovsky-bros/KB/tree/master/SQL/Persons" target="_blank">Load Persons</a>) we have imported this cvs into <code>PropertyType</code> and into <code>Property</code> tables.</p>
 <h4>Data mining</h4>
 <p>At the following stage we looked into data, calculated use counts per each property type, and per property value. This has helped us to formulate several dozen questions about persons, like: "Is he/she living person?", "Is he/she politician?", "Is he/she artist?", "Is he/she writer?", "Is he/she tall?", "Is he a male?".</p>
 <p>We have found that there are questions that split whole set of persons into two more or less equal subsets. Other questions subset rather small set of persons. Yet other questions have fuzzy meaning, or are based on impresice property values (e.g. what does it mean "tall", or what to do with property "sex" that is defined not for all persons?)</p>
@@ -521,7 +521,7 @@ select top(5) * from P order by Weight desc, abs(TotalCount - EntityCount * 2);<
 <p>We might want to join those selects with <code>Data.Property</code> table to bring some entity properties, like name, or description.</p>
 <h4>Implementation of algorithm</h4>
 <p>Now algorithm is clear. The deal is just to implement it. We can see that the structure of select depends considerably on number of questions and type of answers. </p>
-<p>To deal with this we use dynamic SQL. In the past we wrote an article on "<a href="http://www.nesterovsky-bros.com/weblog/2014/02/11/DealingWithDynamicSQLInSQLServer.aspx">Dealing with dynamic SQL in SQL Server</a>".</p>
+<p>To deal with this we use dynamic SQL. In the past we wrote an article on "<a href="http://www.nesterovsky-bros.com/weblog/2014/02/11/DealingWithDynamicSQLInSQLServer.aspx" target="_blank">Dealing with dynamic SQL in SQL Server</a>".</p>
 <p>The idea was to use XQuery as a SQL template language. At first you might think that this is too radical step but after a close look you will observe that it might be the most straightforward solution to deal with dynamic SQL. Just consider an XQuery snapshot that builds <code>"Pi as (...), ..."</code> text:</p>
 <blockquote><pre>'&lt;sql>with &lt;/sql>,
 
@@ -592,7 +592,7 @@ create procedure Data.GetEntities
   <li>refers to the parent node (parent offer); and</li>
   <li>is classified with answer to the parent offer, and with new offered predicate.</li>
 </ul>
-<p>This way cache table can defined like this:</p>
+<p>This way cache table can be defined like this:</p>
 <blockquote><pre>create table Data.PredicateTree
 (
   ID int not null primary key,
