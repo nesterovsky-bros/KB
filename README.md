@@ -563,7 +563,6 @@ create procedure Data.GetNextPredicates
 (
   -- Request parameters.
   @params xml,
-
   -- Result as a predicate
   @result xml output
 );
@@ -573,7 +572,6 @@ create procedure Data.GetEntities
 (
   -- Request parameters.
   @params xml,
-
   -- Optional property value to return.
   @property nvarchar(128)
 );</pre></blockquote>
