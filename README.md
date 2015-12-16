@@ -1,38 +1,27 @@
-<html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <title></title>
-    </head>
-<body>
+<h1>Akinator like engine</h1>
+<p>A collegue has approached to us with a question on how <a href="http://en.akinator.com/">Akinator</a> engine may work. </p>
+<p>To our shame we have never heard about this amazing game before. To fill the gap we have immediately started to play it, and have identified it as a <a href="https://en.wikipedia.org/wiki/Troubleshooting">Troubleshooting</a> solver.</p>
+<p>It took us a couple of minutes to come up with a brilliant solution: "We just need to google and find the engine in the internet". :-)</p>
+<p>Unfortunately, this led to nowhere, as no Akinator itself is open sourced, and no other good quality open source solutions are available.</p>
+<p>After another hour we have got two more ideas:</p>
+<ol>
+<li>The task should fit into SQL;</li>
+<li>The task is a good candidate for a neural network.</li>
+</ol>
+<p>In fact, the first might be required to teach the second, so we have decided to formalize the problem in terms of SQL, while still keeping in mind a neural network.</p>
 
-  <h1>Akinator like engine</h1>
-  <p>A collegue has approached to us with a question on how <a href="http://en.akinator.com/">Akinator</a> engine may work. </p>
-  <p>To our shame we have never heard about this amazing game before. To fill the gap we have immediately started to play it, and have identified it as a <a href="https://en.wikipedia.org/wiki/Troubleshooting">Troubleshooting</a> solver.</p>
-  <p>It took us a couple of minutes to come up with a brilliant solution: "We just need to google and find the engine in the internet". :-)</p>
-  <p>Unfortunately, this led to nowhere, as no Akinator itself is open sourced, and no other good quality open source solutions are available.</p>
-  <p>After another hour we have got two more ideas:</p>
-  <ol>
-    <li>The task should fit into SQL;</li>
-    <li>The task is a good candidate for a neural network.</li>
-  </ol>
-  <p>
-    In fact, the first might be required to teach the second, so we have decided to formalize the problem in terms of SQL, while still keeping in mind a neural network.</p>
-  <h3>SQL solution</h3>
+<h3>SQL solution</h3>
+<p>We have selected SQL Server as a databse to implement our solution. A similar implementation is possible in other SQL (DB2, Oracle, MySql, SQLite), or NoSQL databases. SQL Server's facilities have allowed us to implement the task as a pure T-SQL API.</p>
+<h4>Concepts</h4>
+<p>The task can be defined as:"Guess an <b>entity</b> through a series of <b>predicates</b>".</p>
+<p>The database should contain following tables:</p>
+<ul>
+  <li><code>Entity</code> - to define objects that can be found;</li>
+  <li><code>PredicateType</code> - to define questions that can be asked about objects;</li>
+  <li><code>Predicate</code> - to relate objects with answers to the questions.</li>
+</ul>
 
-  <p>
-    We have selected SQL Server as a databse to implement our solution. A similar implementation is possible in other SQL (DB2, Oracle, MySql, SQLite), or NoSQL databases. SQL Server's facilities have allowed us to implement the task as a pure T-SQL API.</p>
-  <h4>Concepts</h4>
-  <p>
-    The task can be defined as:"Guess an <b>entity</b> through a series of <b>predicates</b>".</p>
-  <p>
-    The database should contain following tables:</p>
-  <ul>
-    <li><code>Entity</code> - to define objects that can be found;</li>
-    <li><code>PredicateType</code> - to define questions that can be asked about objects;</li>
-    <li><code>Predicate</code> - to relate objects with answers to the questions.</li>
-  </ul>
-
-  <p>These tables is enough to construct an algorithm that takes as input a list of questions with answers, and offers the following question(s), if any (see <a href="#nesterovsky-algorithm-to-suggest-next-question">Algorithm to suggest next question</a>). But before building such an algorithm we must understand how can we populate these tables.</p>
+<p>These tables is enough to construct an algorithm that takes as input a list of questions with answers, and offers the following question(s), if any (see <a href="#nesterovsky-algorithm-to-suggest-next-question">Algorithm to suggest next question</a>). But before building such an algorithm we must understand how can we populate these tables.</p>
   <p>We argued like this:</p>
   <ul>
     <li><b>entities</b> have <b>properties</b>;</li>
@@ -749,6 +738,3 @@ create procedure Data.GetEntities
   
 <h4>Play search to populate cache</h4>
 <p>Having a specific entity we can query all predicates the entity belongs to, and to start playing iteratively executing <code>Data.GetNextPredicates</code>. and answering the question. This is what <code>Data.PlaySearch</code> procedure is duing. Except debugging purposes this method populates the search cache.</p>
-
-    </body>
-</html>
