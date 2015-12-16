@@ -306,10 +306,9 @@ return
   
   <h4>Algorithm to suggest next questions</h4>
   
-    <p>
-      Core algorithm spins around <code>Predicate</code>, <code>Entity</code>, and <code>PredicateType</code> tables.</p>
-  <p>
-      Assuming we have <code>P(i)</code> - predicates, and <code>A(i)</code> - answers, where <code>i = 1..n</code>; let answer <code>A(i)</code> be <code>0</code> for "no", and <code>1</code> for "yes". We are going to build a select that returns next predicates.</p>
+  <p>Core algorithm spins around <code>Predicate</code>, <code>Entity</code>, and <code>PredicateType</code> tables.</p>
+  
+  <p>Assuming we have <code>P(i)</code> - predicates, and <code>A(i)</code> - answers, where <code>i = 1..n</code>; let answer <code>A(i)</code> be <code>0</code> for "no", and <code>1</code> for "yes". We are going to build a select that returns next predicates.</p>
   <p>
     The initial part of select gets subsets of entities that match the predicates:</p>
   <blockquote><pre>with P1 as -- P(1)
