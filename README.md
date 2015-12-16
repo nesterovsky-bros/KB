@@ -39,7 +39,7 @@
 <h4>Test data</h4>
 <p>Samples are required to evaluate the quality of the implementation. It took awhile to find such a data, mainly due to the problem with formulation of the search query. We have found the <a href="http://wiki.dbpedia.org/" target="_blank">DBpedia</a> - <em>a crowd-sourced community effort to extract structured information from Wikipedia and make this information available on the Web.</em> </p>
 <p>Many interesting datasets are collected there. We have decided to try <a href="http://web.informatik.uni-mannheim.de/DBpediaAsTables/csv/Person.csv.gz">Person</a> dataset, which we got in cvs format from <a href="http://web.informatik.uni-mannheim.de/DBpediaAsTables/DBpediaClasses.htm" target="_blank">http://web.informatik.uni-mannheim.de/DBpediaAsTables/DBpediaClasses.htm</a>. It contains information for more than 1.5 million persons, with several hundreds of different types of properties.</p>
-<p>Through a sequence of simple manipulations (see later in <a href="https://github.com/nesterovsky-bros/KB/tree/master/SQL/Persons" target="_blank">Load Persons</a>) we have imported this cvs into <code>PropertyType</code> and into <code>Property</code> tables.</p>
+<p>Through a sequence of simple manipulations (see later in <a href="https://github.com/nesterovsky-bros/KB/tree/master/SQL/Persons">Load Persons</a>) we have imported this cvs into <code>PropertyType</code> and into <code>Property</code> tables.</p>
 <h4>Data mining</h4>
 <p>At the following stage we looked into data, calculated use counts per each property type, and per property value. This has helped us to formulate several dozen questions about persons, like: "Is he/she living person?", "Is he/she politician?", "Is he/she artist?", "Is he/she writer?", "Is he/she tall?", "Is he a male?".</p>
 <p>We have found that there are questions that split whole set of persons into two more or less equal subsets. Other questions subset rather small set of persons. Yet other questions have fuzzy meaning, or are based on impresice property values (e.g. what does it mean "tall", or what to do with property "sex" that is defined not for all persons?)</p>
@@ -592,7 +592,7 @@ create procedure Data.GetEntities
   <li>refers to the parent node (parent offer); and</li>
   <li>is classified with answer to the parent offer, and with new offered predicate.</li>
 </ul>
-<p>Path from any specific node to the root of the tree defines a set of questions and answers, and the node itself provides offered predicate.</p>
+<p>Path from any specific node to the root of the tree defines a set of questions and answers, and the node itself offers next predicate.</p>
 <p>This way cache table can be defined like this:</p>
 <blockquote><pre>create table Data.PredicateTree
 (
@@ -623,3 +623,8 @@ create procedure Data.GetEntities
 <p>We can guess a specific entity and start playing executing <code>Data.GetNextPredicates</code> iteratively and answering offered questions.</p>
 <p>This way we shall reach to the point where no more predicates are offered. This way procedures either localized a minimal subset of entities or found required entity itself.</p>
 <p>We have defined a procedure <code>Data.PlaySearch</code> that does exactly this. It plays the game. Among other roles this procedure populates the search cache.</p>
+<h4>Sources</h4>
+<p>Solution sources are published at <a href="https://github.com/nesterovsky-bros/KB">github.com/nesterovsky-bros/KB</a>.</p>
+<p>SQL Server scripts are found at <a href="https://github.com/nesterovsky-bros/KB/SQL">github.com/nesterovsky-bros/KB/SQL</a>.</p>
+<p>Steps to load DBpedia Persons data are described at <a href="https://github.com/nesterovsky-bros/KB/SQL/Persons">github.com/nesterovsky-bros/KB/SQL/Persons</a>.</p>
+<p>Thank you for your attentions.</p>
