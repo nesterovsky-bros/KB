@@ -1,3 +1,7 @@
+-- Simplest form of create database statement.
+-- CREATE DATABASE KB;
+-- USE KB;
+
 CREATE SCHEMA [Data]
 GO
 CREATE SCHEMA [Dynamic]
