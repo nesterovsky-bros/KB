@@ -592,6 +592,7 @@ create procedure Data.GetEntities
   <li>refers to the parent node (parent offer); and</li>
   <li>is classified with answer to the parent offer, and with new offered predicate.</li>
 </ul>
+<p>Path from any specific node to the root of the tree defines a set of questions and answers, and the node itself provides offered predicate.</p>
 <p>This way cache table can be defined like this:</p>
 <blockquote><pre>create table Data.PredicateTree
 (
