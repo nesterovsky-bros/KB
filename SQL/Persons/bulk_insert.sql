@@ -5,5 +5,5 @@ bulk insert Data.PropertyType
   with(batchsize = 100000, datafiletype = 'widechar');
 
 bulk insert Data.Property
-  from '{path to output folder}\metadata.txt'
+  from '{path to output folder}\data.txt'
   with(batchsize = 100000, datafiletype = 'widechar');
