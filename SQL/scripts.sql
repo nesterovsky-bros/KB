@@ -1291,10 +1291,8 @@ CREATE procedure [Data].[GetEntities]
   @params xml,
   -- Number of rows to return
   @take int = null,
-
   -- Optional property value to return.
-  @property nvarchar(128),
-
+  @property nvarchar(128) = null,
   -- Debug options
   @debug bit = null
 )
