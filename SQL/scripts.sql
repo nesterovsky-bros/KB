@@ -938,7 +938,7 @@ GO
 CREATE TABLE [Data].[Property](
 	[EntityID] [int] NOT NULL,
 	[PropertyID] [int] NOT NULL,
-	[Value] [nvarchar](max) NULL
+	[Value] [nvarchar](4000) NULL
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
