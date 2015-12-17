@@ -38,13 +38,11 @@
               foreach(var value in row.Titles)
               {
                 ++j;
-                meta.Write("\"");
                 meta.Write(j);
-                meta.Write("\" \"");
+                meta.Write("\t");
                 meta.Write(value);
-                meta.Write("\" \"");
-                meta.Write(row.Types[j - 1]);
-                meta.WriteLine("\"");
+                meta.Write("\t");
+                meta.Write(Escape(row.Types[j - 1]));
               }
             }
           }
@@ -64,24 +62,20 @@
 
                 foreach(var multivalue in multivalues)
                 {
-                  file.Write("\"");
                   file.Write(row.RowNumber);
-                  file.Write("\" \"");
+                  file.Write("\t");
                   file.Write(i);
-                  file.Write("\" \"");
-                  file.Write(multivalue);
-                  file.WriteLine("\"");
+                  file.Write("\t");
+                  file.Write(Escape(multivalue));
                 }
               }
               else
               {
-                file.Write("\"");
                 file.Write(row.RowNumber);
-                file.Write("\" ");
+                file.Write("\t");
                 file.Write(i);
-                file.Write("\" \"");
-                file.Write(value);
-                file.WriteLine("\"");
+                file.Write("\t");
+                file.Write(Escape(value));
               }
             }
           }
@@ -170,10 +164,16 @@
       }
     }
 
+    public static string Escape(string value)
+    {
+      return value == null ? null :
+        value.Replace('\t', ' ').Replace('\r', ' ').Replace('\n', ' ');
+    }
+
     public static IEnumerable<string> Lines(Encoding encoding, string cvs)
     {
       using(var stream =
-       new FileStream(cvs, FileMode.Open, FileAccess.Read, FileShare.Read))
+       new FileStream(cvs, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
       using(var reader = new StreamReader(stream, encoding))
       {
         while (true)
