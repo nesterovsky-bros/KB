@@ -1290,7 +1290,7 @@ CREATE procedure [Data].[GetEntities]
   -- Request parameters.
   @params xml,
   -- Number of rows to return
-  @take int,
+  @take int = null,
 
   -- Optional property value to return.
   @property nvarchar(128),
