@@ -9,3 +9,11 @@
   <li>Data.txt - file containing properties for each person;</li>
 </ul>
 <p>Preprocessor is implemented as a simple C# program (see <a href="Processor">Preprocessor</a> project).</p>
+<p>Preprocessor is run like this:</p>
+<blockquote>Preprocessor.exe {encoding} {path to person.cvs} {path to output folder}</blockquote>
+<p>where</p>
+<ul>
+  <li><code>{encoding}</code> - cvs's file encoding; place there 1252.</li>
+  <li><code>{path to person.cvs}</code> - path to input cvs file.</li>
+  <li><code>{path to output folder}</code> - path to output folder.</li>
+</ul>
