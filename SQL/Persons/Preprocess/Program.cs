@@ -3,6 +3,7 @@
   using System;
   using System.Collections.Generic;
   using System.IO;
+  using System.Net;
   using System.Text;
 
   class Program
@@ -167,7 +168,10 @@
     public static string Escape(string value)
     {
       return value == null ? null :
-        value.Replace('\t', ' ').Replace('\r', ' ').Replace('\n', ' ');
+        WebUtility.UrlDecode(value).
+          Replace('\t', ' ').
+          Replace('\r', ' ').
+          Replace('\n', ' ');
     }
 
     public static IEnumerable<string> Lines(Encoding encoding, string cvs)
