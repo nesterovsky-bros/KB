@@ -42,7 +42,7 @@
                 meta.Write("\t");
                 meta.Write(value);
                 meta.Write("\t");
-                meta.Write(Escape(row.Types[j - 1]));
+                meta.WriteLine(Escape(row.Types[j - 1]));
               }
             }
           }
@@ -66,7 +66,7 @@
                   file.Write("\t");
                   file.Write(i);
                   file.Write("\t");
-                  file.Write(Escape(multivalue));
+                  file.WriteLine(Escape(multivalue));
                 }
               }
               else
@@ -75,7 +75,7 @@
                 file.Write("\t");
                 file.Write(i);
                 file.Write("\t");
-                file.Write(Escape(value));
+                file.WriteLine(Escape(value));
               }
             }
           }
