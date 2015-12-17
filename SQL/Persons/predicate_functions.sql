@@ -1,68 +1,66 @@
-create function [Data].[Predicate_DealsWithRaceHorses]()
+CREATE function[Data].[Predicate_DealsWithRaceHorses]()
 returns table
 as
 return
-  select distinct
+  select
     EntityID
   from 
-    Data.Property
+    Data.GetEntityProperties('22-rdf-syntax-ns#type_label')
   where 
-    (PropertyID = Data.GetPropertyID('22-rdf-syntax-ns#type_label')) and
-    (TextValue like '%Racehorse%')
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE function [Data].[Predicate_HasAwards]()
-returns table
-as
-return
-  select distinct
-    EntityID
-  from 
-    Data.Property 
-  where 
-    PropertyID = Data.GetPropertyID('award_label')
+    Value like '%Racehorse%'
 
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE function [Data].[Predicate_HasBlackHairs]()
+CREATE function[Data].[Predicate_HasAwards]()
 returns table
 as
 return
-  select distinct
+  select
+    EntityID
+  from 
+    Data.GetEntityProperties('award_label')
+
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE function[Data].[Predicate_HasBlackHairs]()
+returns table
+as
+return
+  select
     EntityID
   from
-    Data.Property with(index([IX_Property_Property]))
-  where
-    PropertyID = Data.GetPropertyID('hairColor')
-	and TextValue in (
+    Data.GetEntityProperties('hairColor')
+	where
+    Value in (
 'Black',
 'Dark Brown/Black',
 'Jet Black',
 'Black (natural)'
 )
 
+
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE function [Data].[Predicate_HasBrownHairs]()
+CREATE function[Data].[Predicate_HasBrownHairs]()
 returns table
 as
 return
-  select distinct
+  select
     EntityID
   from
-    Data.Property with(index([IX_Property_Property]))
-  where
-    PropertyID = Data.GetPropertyID('hairColor')
-	and TextValue in (
+    Data.GetEntityProperties('hairColor')
+	where
+    Value in (
 'Brown',
 'Brunette',
 'Dark Brown',
@@ -71,39 +69,39 @@ return
 'Brown (dyed)'
 )
 
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-create function [Data].[Predicate_HasChef]()
-returns table
-as
-return
-  select
-    EntityID
-  from 
-    Data.Property with(index([IX_Property_Property]))
-  where 
-    (PropertyID = Data.GetPropertyID('HasChef')) and
-    (TextValue in (N'כן', '1', 'yes', 'true'))
 
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE function [Data].[Predicate_HasLightHairs]()
+CREATE function[Data].[Predicate_HasChef]()
 returns table
 as
 return
-  select distinct
+  select
+    EntityID
+  from 
+    Data.GetEntityProperties('HasChef')
+  where
+    (Value in (N'כן', '1', 'yes', 'true'))
+
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE function[Data].[Predicate_HasLightHairs]()
+returns table
+as
+return
+  select
     EntityID
   from
-    Data.Property with(index([IX_Property_Property]))
-  where
-    PropertyID = Data.GetPropertyID('hairColor')
-	and TextValue in (
+    Data.GetEntityProperties('hairColor')
+	where
+    Value in (
 'Blonde',
 'blond',
 'Dark Blonde',
@@ -112,22 +110,22 @@ return
 'Platinum blond'
 )
 
+
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE function [Data].[Predicate_HasReddishHairs]()
+CREATE function[Data].[Predicate_HasReddishHairs]()
 returns table
 as
 return
-  select distinct
+  select
     EntityID
   from
-    Data.Property with(index([IX_Property_Property]))
-  where
-    PropertyID = Data.GetPropertyID('hairColor')
-	and TextValue in (
+    Data.GetEntityProperties('hairColor')
+	where
+    Value in (
 'Chestnut Brown',
 'Red',
 'Auburn',
@@ -135,356 +133,356 @@ return
 'Reddish Brown'
 )
 
+
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE function [Data].[Predicate_IsActor]()
+CREATE function[Data].[Predicate_IsActor]()
 returns table
 as
 return
   select
     EntityID
   from 
-    Data.Property
-  where 
-    (PropertyID = Data.GetPropertyID('22-rdf-syntax-ns#type_label')) and
-    (TextValue in ('actor'))
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-create function [Data].[Predicate_IsAmericanFootballPlayer]()
-returns table
-as
-return
-  select distinct
-    EntityID
-  from 
-    Data.Property with(index([IX_Property_Property]))
-  where 
-    (PropertyID = Data.GetPropertyID('22-rdf-syntax-ns#type_label')) and
-    (TextValue = 'american football player')
+    Data.GetEntityProperties('22-rdf-syntax-ns#type_label')
+  where
+    (Value in ('actor'))
 
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE function [Data].[Predicate_IsArchitect]()
+CREATE function[Data].[Predicate_IsAmericanFootballPlayer]()
 returns table
 as
 return
-  select distinct
+  select
     EntityID
   from 
-    Data.Property with(index([IX_Property_Property]))
-  where 
-    (PropertyID = Data.GetPropertyID('22-rdf-syntax-ns#type_label')) and
-    (TextValue = 'architect')
+    Data.GetEntityProperties('22-rdf-syntax-ns#type_label')
+  where
+    (Value = 'american football player')
+
+
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE function [Data].[Predicate_IsArtist]()
+CREATE function[Data].[Predicate_IsArchitect]()
 returns table
 as
 return
-  select distinct
+  select
     EntityID
   from 
-    Data.Property with(index([IX_Property_Property]))
-  where 
-    (PropertyID = Data.GetPropertyID('22-rdf-syntax-ns#type_label')) and
-    (TextValue = 'artist')
+    Data.GetEntityProperties('22-rdf-syntax-ns#type_label')
+  where
+    (Value = 'architect')
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE function[Data].[Predicate_IsArtist]()
+returns table
+as
+return
+  select
+    EntityID
+  from 
+    Data.GetEntityProperties('22-rdf-syntax-ns#type_label')
+  where
+    (Value = 'artist')
+
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-create function [Data].[Predicate_IsAstronaut]()
+CREATE function[Data].[Predicate_IsAstronaut]()
 returns table
 as
 return
-  select distinct
+  select
     EntityID
   from 
-    Data.Property with(index([IX_Property_Property]))
-  where 
-    (PropertyID = Data.GetPropertyID('22-rdf-syntax-ns#type')) and
-    (TextValue = 'http://dbpedia.org/ontology/Astronaut')
+    Data.GetEntityProperties('22-rdf-syntax-ns#type')
+  where
+    (Value = 'http://dbpedia.org/ontology/Astronaut')
+
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create function [Data].[Predicate_IsBaroqueComposer]()
+CREATE function[Data].[Predicate_IsBaroqueComposer]()
 returns table
 as
 return
-  select distinct
+  select
     EntityID
   from 
-    Data.Property with(index([IX_Property_Property]))
-  where 
-    (PropertyID = Data.GetPropertyID('22-rdf-syntax-ns#type_label')) and
-    (TextValue = 'BaroqueComposers')
+    Data.GetEntityProperties('22-rdf-syntax-ns#type_label')
+  where
+    (Value = 'BaroqueComposers')
+
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE function [Data].[Predicate_IsBaseballPlayer]()
+CREATE function[Data].[Predicate_IsBaseballPlayer]()
 returns table
 as
 return
-  select distinct
+  select
     EntityID
   from
-    Data.Property
+    Data.GetEntityProperties('22-rdf-syntax-ns#type')
   where
-    (PropertyID = Data.GetPropertyID('22-rdf-syntax-ns#type')) and
-    TextValue in (
+    Value in (
 	 'http://dbpedia.org/ontology/BaseballPlayer',
 	 'http://umbel.org/umbel/rc/BaseballPlayer'
 	)
 
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE function [Data].[Predicate_IsBasketballPlayer]()
-returns table
-as
-return
-  select distinct
-    EntityID
-  from 
-    Data.Property with(index([IX_Property_Property]))
-  where 
-    (PropertyID = Data.GetPropertyID('22-rdf-syntax-ns#type_label')) and
-    (TextValue like 'BasketballPlayer%')
 
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-
-create function [Data].[Predicate_IsBeautyQueen]()
-returns table
-as
-return
-  select distinct
-    EntityID
-  from 
-    Data.Property with(index([IX_Property_Property]))
-  where 
-    (PropertyID = Data.GetPropertyID('22-rdf-syntax-ns#type')) and
-    (TextValue = 'http://dbpedia.org/ontology/BeautyQueen')
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE function [Data].[Predicate_IsBoxer]()
-returns table
-as
-return
-  select distinct
-    EntityID
-  from 
-    Data.Property with(index([IX_Property_Property]))
-  where 
-    (PropertyID = Data.GetPropertyID('22-rdf-syntax-ns#type_label')) and
-    (TextValue like 'Boxer%')
-
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-create function [Data].[Predicate_IsBusinessPerson]()
-returns table
-as
-return
-  select distinct
-    EntityID
-  from 
-    Data.Property with(index([IX_Property_Property]))
-  where 
-    (PropertyID = Data.GetPropertyID('22-rdf-syntax-ns#type')) and
-    (TextValue = 'http://dbpedia.org/ontology/BusinessPerson')
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE function [Data].[Predicate_IsChessPlayer]()
-returns table
-as
-return
-  select distinct
-    EntityID
-  from 
-    Data.Property with(index([IX_Property_Property]))
-  where 
-    (PropertyID = Data.GetPropertyID('22-rdf-syntax-ns#type_label')) and
-    (TextValue like '%ChessPlayer%')
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE function [Data].[Predicate_IsCoach]()
-returns table
-as
-return
-  select distinct
-    EntityID
-  from 
-    Data.Property with(index([IX_Property_Property]))
-  where 
-    (PropertyID = Data.GetPropertyID('22-rdf-syntax-ns#type_label')) and
-    (TextValue like '%Coach%')
-
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE function [Data].[Predicate_IsComedian]()
-returns table
-as
-return
-  select distinct
-    EntityID
-  from 
-    Data.Property with(index([IX_Property_Property]))
-  where 
-    (PropertyID = Data.GetPropertyID('22-rdf-syntax-ns#type')) and
-    (TextValue in
-	 ('http://dbpedia.org/ontology/Comedian', 'http://umbel.org/umbel/rc/Comedian'))
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-create function [Data].[Predicate_IsComposer]()
-returns table
-as
-return
-  select distinct
-    EntityID
-  from 
-    Data.Property with(index([IX_Property_Property]))
-  where 
-    (PropertyID = Data.GetPropertyID('22-rdf-syntax-ns#type_label')) and
-    (TextValue like '%Composer%')
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE function [Data].[Predicate_IsCriminal]()
+CREATE function[Data].[Predicate_IsBasketballPlayer]()
 returns table
 as
 return
   select
     EntityID
   from 
-    Data.Property
-  where 
-    (PropertyID = Data.GetPropertyID('22-rdf-syntax-ns#type_label')) and
-    (TextValue like 'criminal%')
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE function [Data].[Predicate_IsFemale]()
-returns table
-as
-return
-  select distinct
-    EntityID
-  from 
-    Data.Property with(index([IX_Property_Property]))
-  where 
-    (PropertyID = Data.GetPropertyID('gender_label'))
-	and (TextValue = 'Female')
+    Data.GetEntityProperties('22-rdf-syntax-ns#type_label')
+  where
+    (Value like 'BasketballPlayer%')
+
 
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE function [Data].[Predicate_IsFictionalCharacter]()
+
+CREATE function[Data].[Predicate_IsBeautyQueen]()
 returns table
 as
 return
-  select distinct
+  select
     EntityID
   from 
-    Data.Property with(index([IX_Property_Property]))
-  where 
-    (PropertyID = Data.GetPropertyID('22-rdf-syntax-ns#type_label')) and
-    (TextValue = 'fictional character')
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE function [Data].[Predicate_IsFigureSkater]()
-returns table
-as
-return
-  select distinct
-    EntityID
-  from 
-    Data.Property with(index([IX_Property_Property]))
-  where 
-    (PropertyID = Data.GetPropertyID('22-rdf-syntax-ns#type_label')) and
-    (TextValue like '%FigureSkater%')
+    Data.GetEntityProperties('22-rdf-syntax-ns#type')
+  where
+    (Value = 'http://dbpedia.org/ontology/BeautyQueen')
 
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create function [Data].[Predicate_IsFootballPlayer]()
+CREATE function[Data].[Predicate_IsBoxer]()
 returns table
 as
 return
-  select distinct
+  select
+    EntityID
+  from 
+    Data.GetEntityProperties('22-rdf-syntax-ns#type_label')
+  where
+    (Value like 'Boxer%')
+
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE function[Data].[Predicate_IsBusinessPerson]()
+returns table
+as
+return
+  select
+    EntityID
+  from 
+    Data.GetEntityProperties('22-rdf-syntax-ns#type')
+  where
+    (Value = 'http://dbpedia.org/ontology/BusinessPerson')
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE function[Data].[Predicate_IsChessPlayer]()
+returns table
+as
+return
+  select
+    EntityID
+  from 
+    Data.GetEntityProperties('22-rdf-syntax-ns#type_label')
+  where
+    (Value like '%ChessPlayer%')
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE function[Data].[Predicate_IsCoach]()
+returns table
+as
+return
+  select
+    EntityID
+  from 
+    Data.GetEntityProperties('22-rdf-syntax-ns#type_label')
+  where
+    (Value like '%Coach%')
+
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE function[Data].[Predicate_IsComedian]()
+returns table
+as
+return
+  select
+    EntityID
+  from 
+    Data.GetEntityProperties('22-rdf-syntax-ns#type')
+  where
+    (Value in
+	 ('http://dbpedia.org/ontology/Comedian', 'http://umbel.org/umbel/rc/Comedian'))
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE function[Data].[Predicate_IsComposer]()
+returns table
+as
+return
+  select
+    EntityID
+  from 
+    Data.GetEntityProperties('22-rdf-syntax-ns#type_label')
+  where
+    (Value like '%Composer%')
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE function[Data].[Predicate_IsCriminal]()
+returns table
+as
+return
+  select
+    EntityID
+  from 
+    Data.GetEntityProperties('22-rdf-syntax-ns#type_label')
+  where
+    (Value like 'criminal%')
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE function[Data].[Predicate_IsFemale]()
+returns table
+as
+return
+  select
+    EntityID
+  from 
+    Data.GetEntityProperties('gender_label')
+  where
+	  (Value = 'Female')
+
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE function[Data].[Predicate_IsFictionalCharacter]()
+returns table
+as
+return
+  select
+    EntityID
+  from 
+    Data.GetEntityProperties('22-rdf-syntax-ns#type_label')
+  where
+    (Value = 'fictional character')
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE function[Data].[Predicate_IsFigureSkater]()
+returns table
+as
+return
+  select
+    EntityID
+  from 
+    Data.GetEntityProperties('22-rdf-syntax-ns#type_label')
+  where
+    (Value like '%FigureSkater%')
+
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE function[Data].[Predicate_IsFootballPlayer]()
+returns table
+as
+return
+  select
     EntityID
   from
-    Data.Property
-  where
-    PropertyID = Data.GetPropertyID('22-rdf-syntax-ns#type_label')
-	and TextValue like 'FootballPlayer%'
+    Data.GetEntityProperties('22-rdf-syntax-ns#type_label')
+	where
+    Value like 'FootballPlayer%'
+
 
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create function [Data].[Predicate_IsFromGreekMythology]()
+CREATE function[Data].[Predicate_IsFromGreekMythology]()
 returns table
 as
 return
-  select distinct
+  select
     EntityID
   from
-    Data.Property
+    Data.GetEntityProperties('mythology_label')
   where
-    PropertyID = 256
-	and TextValue in (
+    Value in (
 'Greek mythology',
 '"Greek mythology"'
 )
@@ -494,17 +492,16 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE function [Data].[Predicate_IsGymnast]()
+CREATE function[Data].[Predicate_IsGymnast]()
 returns table
 as
 return
-  select distinct
+  select
     EntityID
   from
-    Data.Property
+    Data.GetEntityProperties('22-rdf-syntax-ns#type_label')
   where
-    (PropertyID = Data.GetPropertyID('22-rdf-syntax-ns#type_label')) and
-    TextValue in ('Gymnast', 'gymnast')
+    Value in ('Gymnast', 'gymnast')
 
 GO
 SET ANSI_NULLS ON
@@ -512,33 +509,33 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-create function [Data].[Predicate_IsHistorian]()
+CREATE function[Data].[Predicate_IsHistorian]()
 returns table
 as
 return
-  select distinct
+  select
     EntityID
   from 
-    Data.Property with(index([IX_Property_Property]))
-  where 
-    (PropertyID = Data.GetPropertyID('22-rdf-syntax-ns#type')) and
-    (TextValue = 'http://dbpedia.org/ontology/Historian')
+    Data.GetEntityProperties('22-rdf-syntax-ns#type')
+  where
+    (Value = 'http://dbpedia.org/ontology/Historian')
+
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create function [Data].[Predicate_IsIceHockeyPlayer]()
+CREATE function[Data].[Predicate_IsIceHockeyPlayer]()
 returns table
 as
 return
-  select distinct
+  select
     EntityID
   from 
-    Data.Property with(index([IX_Property_Property]))
-  where 
-    (PropertyID = Data.GetPropertyID('22-rdf-syntax-ns#type_label')) and
-    (TextValue = 'ice hockey player')
+    Data.GetEntityProperties('22-rdf-syntax-ns#type_label')
+  where
+    (Value = 'ice hockey player')
+
 
 GO
 SET ANSI_NULLS ON
@@ -546,84 +543,83 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE function [Data].[Predicate_IsJournalist]()
+CREATE function[Data].[Predicate_IsJournalist]()
 returns table
 as
 return
-  select distinct
+  select
     EntityID
   from 
-    Data.Property with(index([IX_Property_Property]))
-  where 
-    (PropertyID = Data.GetPropertyID('22-rdf-syntax-ns#type_label')) and
-    (TextValue like 'Journalist%')
+    Data.GetEntityProperties('22-rdf-syntax-ns#type_label')
+  where
+    (Value like 'Journalist%')
+
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-create function [Data].[Predicate_IsJudge]()
+CREATE function[Data].[Predicate_IsJudge]()
 returns table
 as
 return
-  select distinct
+  select
     EntityID
   from 
-    Data.Property with(index([IX_Property_Property]))
-  where 
-    (PropertyID = Data.GetPropertyID('22-rdf-syntax-ns#type_label')) and
-    (TextValue = 'judge')
+    Data.GetEntityProperties('22-rdf-syntax-ns#type_label')
+  where
+    (Value = 'judge')
+
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE function [Data].[Predicate_IsKnownEconomist]()
+CREATE function[Data].[Predicate_IsKnownEconomist]()
 returns table
 as
 return
-  select distinct
+  select
     EntityID
   from
-    Data.Property
-  where
-    PropertyID = 212
-	and TextValue in ('Economist', 'Economics', 'Finance')
+    Data.GetEntityProperties('knownFor_label')
+	where
+    Value in ('Economist', 'Economics', 'Finance')
+
 
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create function [Data].[Predicate_IsKnownForActivism]()
+CREATE function[Data].[Predicate_IsKnownForActivism]()
 returns table
 as
 return
-  select distinct
+  select
     EntityID
   from
-    Data.Property
-  where
-    PropertyID = 212
-	and TextValue = 'Activism'
+    Data.GetEntityProperties('knownFor_label')
+	where
+    Value = 'Activism'
+
 
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE function [Data].[Predicate_IsKnownForAstronomyOrAstrophysics]()
+CREATE function[Data].[Predicate_IsKnownForAstronomyOrAstrophysics]()
 returns table
 as
 return
-  select distinct
+  select
     EntityID
   from
-    Data.Property
-  where
-    PropertyID = Data.GetPropertyID('knownFor_label')
-	and TextValue in (
+    Data.GetEntityProperties('knownFor_label')
+	where
+    Value in (
 'Astronomy',
 'Astrophysics',
 'Dark matter',
@@ -632,22 +628,22 @@ return
 'Chaos theory'
 )
 
+
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE function [Data].[Predicate_IsKnownForBotanyOrBiology]()
+CREATE function[Data].[Predicate_IsKnownForBotanyOrBiology]()
 returns table
 as
 return
-  select distinct
+  select
     EntityID
   from
-    Data.Property
-  where
-    PropertyID = Data.GetPropertyID('knownFor_label')
-	and TextValue in (
+    Data.GetEntityProperties('knownFor_label')
+	where
+    Value in (
 'Botany',
 'Plant pathology',
 'Flora',
@@ -659,61 +655,61 @@ return
 'Neuroscience'
 )
 
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE function [Data].[Predicate_IsKnownForCancerResearch]()
-returns table
-as
-return
-  select distinct
-    EntityID
-  from
-    Data.Property
-  where
-    PropertyID = Data.GetPropertyID('knownFor_label')
-	and TextValue in ('Cancer research', 'Cancer')
 
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE function [Data].[Predicate_IsKnownForChemistry]()
+CREATE function[Data].[Predicate_IsKnownForCancerResearch]()
 returns table
 as
 return
-  select distinct
+  select
     EntityID
   from
-    Data.Property
-  where
-    PropertyID = Data.GetPropertyID('knownFor_label')
-	and TextValue in (
+    Data.GetEntityProperties('knownFor_label')
+	where
+    Value in ('Cancer research', 'Cancer')
+
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE function[Data].[Predicate_IsKnownForChemistry]()
+returns table
+as
+return
+  select
+    EntityID
+  from
+    Data.GetEntityProperties('knownFor_label')
+	where
+    Value in (
 'Quantum chemistry',
 'Organometallic chemistry',
 'Stereochemistry',
 'Periodic table'
 )
 
+
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE function [Data].[Predicate_IsKnownForComputerScience]()
+CREATE function[Data].[Predicate_IsKnownForComputerScience]()
 returns table
 as
 return
-  select distinct
+  select
     EntityID
   from
-    Data.Property
-  where
-    PropertyID = Data.GetPropertyID('knownFor_label')
-	and TextValue in (
+    Data.GetEntityProperties('knownFor_label')
+	where
+    Value in (
 'Computer science',
 'Ubiquitous computing',
 'Humanâ€“computer interaction',
@@ -728,39 +724,39 @@ return
 'Supercomputer'
 )
 
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE function [Data].[Predicate_IsKnownForFeminism]()
-returns table
-as
-return
-  select distinct
-    EntityID
-  from
-    Data.Property
-  where
-    PropertyID = Data.GetPropertyID('knownFor_label')
-	and TextValue in ('Feminism', 'Women''s rights')
 
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE function [Data].[Predicate_IsKnownForGenetics]()
+CREATE function[Data].[Predicate_IsKnownForFeminism]()
 returns table
 as
 return
-  select distinct
+  select
     EntityID
   from
-    Data.Property
-  where
-    PropertyID = Data.GetPropertyID('knownFor_label')
-	and TextValue in (
+    Data.GetEntityProperties('knownFor_label')
+	where
+    Value in ('Feminism', 'Women''s rights')
+
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE function[Data].[Predicate_IsKnownForGenetics]()
+returns table
+as
+return
+  select
+    EntityID
+  from
+    Data.GetEntityProperties('knownFor_label')
+	where
+    Value in (
 'Embryogenesis',
 'Genetics',
 'Transduction (genetics)',
@@ -770,60 +766,60 @@ return
 'Population genetics'
 )
 
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE function [Data].[Predicate_IsKnownForHumanRights]()
-returns table
-as
-return
-  select distinct
-    EntityID
-  from
-    Data.Property
-  where
-    PropertyID = Data.GetPropertyID('knownFor_label')
-	and TextValue in ('Human rights', 'Human rights defender')
 
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE function [Data].[Predicate_IsKnownForInternet]()
+CREATE function[Data].[Predicate_IsKnownForHumanRights]()
 returns table
 as
 return
-  select distinct
+  select
     EntityID
   from
-    Data.Property
-  where
-    PropertyID = Data.GetPropertyID('knownFor_label')
-	and TextValue in (
+    Data.GetEntityProperties('knownFor_label')
+	where
+    Value in ('Human rights', 'Human rights defender')
+
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE function[Data].[Predicate_IsKnownForInternet]()
+returns table
+as
+return
+  select
+    EntityID
+  from
+    Data.GetEntityProperties('knownFor_label')
+	where
+    Value in (
 'Video blog',
 'Blog',
 'YouTube'
 )
 
+
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE function [Data].[Predicate_IsKnownForMathematic]()
+CREATE function[Data].[Predicate_IsKnownForMathematic]()
 returns table
 as
 return
-  select distinct
+  select
     EntityID
   from
-    Data.Property
-  where
-    PropertyID = Data.GetPropertyID('knownFor_label')
-	and TextValue in (
+    Data.GetEntityProperties('knownFor_label')
+	where
+    Value in (
 'Partial differential equation',
 'Combinatorics',
 'Functional analysis',
@@ -848,22 +844,22 @@ return
 'Applied mathematics'
 )
 
+
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE function [Data].[Predicate_IsKnownForMedicine]()
+CREATE function[Data].[Predicate_IsKnownForMedicine]()
 returns table
 as
 return
-  select distinct
+  select
     EntityID
   from
-    Data.Property
-  where
-    PropertyID = Data.GetPropertyID('knownFor_label')
-	and TextValue in (
+    Data.GetEntityProperties('knownFor_label')
+	where
+    Value in (
 'Medicine',
 'Immunology',
 'Dermatology',
@@ -874,56 +870,56 @@ return
 'Tuberculosis'
 )
 
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE function [Data].[Predicate_IsKnownForPhilanthropy]()
-returns table
-as
-return
-  select distinct
-    EntityID
-  from
-    Data.Property
-  where
-    PropertyID = Data.GetPropertyID('knownFor_label')
-	and TextValue = 'Philanthropy'
 
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE function [Data].[Predicate_IsKnownForPhotography]()
+CREATE function[Data].[Predicate_IsKnownForPhilanthropy]()
 returns table
 as
 return
-  select distinct
+  select
     EntityID
   from
-    Data.Property
-  where
-    PropertyID = Data.GetPropertyID('knownFor_label')
-	and TextValue in ('Photography', 'photography')
+    Data.GetEntityProperties('knownFor_label')
+	where
+    Value = 'Philanthropy'
+
 
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE function [Data].[Predicate_IsKnownForPhysics]()
+CREATE function[Data].[Predicate_IsKnownForPhotography]()
 returns table
 as
 return
-  select distinct
+  select
     EntityID
   from
-    Data.Property
-  where
-    PropertyID = Data.GetPropertyID('knownFor_label')
-	and TextValue in (
+    Data.GetEntityProperties('knownFor_label')
+	where
+    Value in ('Photography', 'photography')
+
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE function[Data].[Predicate_IsKnownForPhysics]()
+returns table
+as
+return
+  select
+    EntityID
+  from
+    Data.GetEntityProperties('knownFor_label')
+	where
+    Value in (
 'Nuclear magnetic resonance',
 'Nuclear physics',
 'High-temperature superconductivity',
@@ -953,300 +949,306 @@ return
 'Statistical mechanics'
 )
 
+
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE function [Data].[Predicate_IsKnownInIndia]()
+CREATE function[Data].[Predicate_IsKnownInIndia]()
 returns table
 as
 return
-  select distinct
+  select
     EntityID
   from
-    Data.Property
+    Data.GetEntityProperties('knownFor_label')
+	where
+    Value in ('Indian independence movement', 'India')
+
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE function[Data].[Predicate_IsLivingPerson]()
+returns table
+as
+return
+  select
+    EntityID
+  from 
+    Data.GetEntityProperties('22-rdf-syntax-ns#type_label')
   where
-    PropertyID = Data.GetPropertyID('knownFor_label')
-	and TextValue in ('Indian independence movement', 'India')
+    (Value = 'LivingPeople')
 
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create function [Data].[Predicate_IsLivingPerson]()
-returns table
-as
-return
-  select distinct
-    EntityID
-  from 
-    Data.Property with(index([IX_Property_Property]))
-  where 
-    (PropertyID = Data.GetPropertyID('22-rdf-syntax-ns#type_label')) and
-    (TextValue = 'LivingPeople')
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE function [Data].[Predicate_IsMale]()
+CREATE function[Data].[Predicate_IsMale]()
 returns table
 as
 return
   select
     EntityID
   from 
-    Data.Property
+    Data.GetEntityProperties('gender_label')
   where 
-    (PropertyID = Data.GetPropertyID('gender_label')) and 
-    (TextValue = 'Male')
+    (Value = 'Male')
+
 
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE function [Data].[Predicate_IsMilitary]()
+CREATE function[Data].[Predicate_IsMilitary]()
 returns table
 as
 return
   select
     EntityID
-  from 
-    Data.Property with(index([IX_Property_Property]))
-  where 
-    PropertyID in 
-      (
-        Data.GetPropertyID('militaryCommand'),
-        Data.GetPropertyID('militaryBranch_label'),
-        Data.GetPropertyID('militaryUnit_label'),
-        Data.GetPropertyID('militaryRank_label')
-      )
+  from
+    Data.GetEntityProperties('militaryCommand')
+  union all
+  select
+    EntityID
+  from
+    Data.GetEntityProperties('militaryBranch_label')
   union all
   select
     EntityID
   from 
-    Data.Property with(index([IX_Property_Property]))
-  where 
-    (PropertyID = Data.GetPropertyID('22-rdf-syntax-ns#type_label')) and
-    (TextValue = 'military person')
+    Data.GetEntityProperties('militaryUnit_label')
+  union all
+  select
+    EntityID
+  from 
+    Data.GetEntityProperties('militaryRank_label')
+  union all
+  select
+    EntityID
+  from
+    Data.GetEntityProperties('22-rdf-syntax-ns#type_label')
+  where
+    (Value = 'military person')
 
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create function [Data].[Predicate_IsMinister]()
+CREATE function[Data].[Predicate_IsMinister]()
 returns table
 as
 return
   select
     EntityID
   from 
-    Data.Property
-  where 
-    (PropertyID = Data.GetPropertyID('22-rdf-syntax-ns#type_label')) and
-    (TextValue like 'Minister%')
+    Data.GetEntityProperties('22-rdf-syntax-ns#type_label')
+  where
+    (Value like 'Minister%')
+
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create function [Data].[Predicate_IsModel]()
-returns table
-as
-return
-  select distinct
-    EntityID
-  from 
-    Data.Property with(index([IX_Property_Property]))
-  where 
-    (PropertyID = Data.GetPropertyID('22-rdf-syntax-ns#type_label')) and
-    (TextValue = 'model')
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE function [Data].[Predicate_IsMonarch]()
-returns table
-as
-return
-  select distinct
-    EntityID
-  from 
-    Data.Property with(index([IX_Property_Property]))
-  where 
-    (PropertyID = Data.GetPropertyID('22-rdf-syntax-ns#type_label')) and
-    (TextValue in ('Monarch', 'monarch'))
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-create function [Data].[Predicate_IsMonarchist]()
+CREATE function[Data].[Predicate_IsModel]()
 returns table
 as
 return
   select
     EntityID
   from 
-    Data.Property
-  where 
-    (PropertyID = Data.GetPropertyID('22-rdf-syntax-ns#type_label')) and
-    (TextValue like 'Monarchist%')
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-create function [Data].[Predicate_IsMotorsportRacer]()
-returns table
-as
-return
-  select distinct
-    EntityID
-  from 
-    Data.Property with(index([IX_Property_Property]))
-  where 
-    (PropertyID = Data.GetPropertyID('22-rdf-syntax-ns#type_label')) and
-    (TextValue = 'motorsport racer')
+    Data.GetEntityProperties('22-rdf-syntax-ns#type_label')
+  where
+    (Value = 'model')
 
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE function [Data].[Predicate_IsMusician]()
+CREATE function[Data].[Predicate_IsMonarch]()
 returns table
 as
 return
-  select distinct
+  select
+    EntityID
+  from 
+    Data.GetEntityProperties('22-rdf-syntax-ns#type_label')
+  where
+    (Value in ('Monarch', 'monarch'))
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE function[Data].[Predicate_IsMonarchist]()
+returns table
+as
+return
+  select
+    EntityID
+  from 
+    Data.GetEntityProperties('22-rdf-syntax-ns#type_label')
+  where
+    (Value like 'Monarchist%')
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE function[Data].[Predicate_IsMotorsportRacer]()
+returns table
+as
+return
+  select
+    EntityID
+  from 
+    Data.GetEntityProperties('22-rdf-syntax-ns#type_label')
+  where
+    (Value = 'motorsport racer')
+
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE function[Data].[Predicate_IsMusician]()
+returns table
+as
+return
+  select
     EntityID
   from
-    Data.Property 
+    Data.GetEntityProperties('22-rdf-syntax-ns#type_label')
   where
-    PropertyID = Data.GetPropertyID('22-rdf-syntax-ns#type_label')
-	and TextValue like '%Musician%'
+	  Value like '%Musician%'
+
 
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create function [Data].[Predicate_IsNoble]()
+CREATE function[Data].[Predicate_IsNoble]()
 returns table
 as
 return
-  select distinct
+  select
     EntityID
   from 
-    Data.Property with(index([IX_Property_Property]))
-  where 
-    (PropertyID = Data.GetPropertyID('22-rdf-syntax-ns#type')) and
-    (TextValue = 'http://dbpedia.org/ontology/Noble')
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-create function [Data].[Predicate_IsOfficer]()
-returns table
-as
-return
-  select distinct
-    EntityID
-  from 
-    Data.Property with(index([IX_Property_Property]))
-  where 
-    PropertyID = Data.GetPropertyID('22-rdf-syntax-ns#type_label')
-	and
-	TextValue like '%Officer%'
+    Data.GetEntityProperties('22-rdf-syntax-ns#type')
+  where
+    (Value = 'http://dbpedia.org/ontology/Noble')
 
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create function [Data].[Predicate_IsOrganist]()
+CREATE function[Data].[Predicate_IsOfficer]()
 returns table
 as
 return
-  select distinct
+  select
+    EntityID
+  from 
+    Data.GetEntityProperties('22-rdf-syntax-ns#type_label')
+	where
+	Value like '%Officer%'
+
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE function[Data].[Predicate_IsOrganist]()
+returns table
+as
+return
+  select
     EntityID
   from
-    Data.Property 
+    Data.GetEntityProperties('22-rdf-syntax-ns#type_label')
   where
-    PropertyID = Data.GetPropertyID('22-rdf-syntax-ns#type_label')
-	and TextValue like '%Organist%'
+	  Value like '%Organist%'
+
 
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE function [Data].[Predicate_IsPainter]()
+CREATE function[Data].[Predicate_IsPainter]()
 returns table
 as
 return
-  select distinct
+  select
     EntityID
   from 
-    Data.Property with(index([IX_Property_Property]))
-  where 
-    (PropertyID = Data.GetPropertyID('22-rdf-syntax-ns#type_label')) and
-    (TextValue in ('Painter', 'painter'))
+    Data.GetEntityProperties('22-rdf-syntax-ns#type_label')
+  where
+    (Value in ('Painter', 'painter'))
+
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE function [Data].[Predicate_IsPhilosopher]()
+CREATE function[Data].[Predicate_IsPhilosopher]()
 returns table
 as
 return
-  select distinct
+  select
     EntityID
   from 
-    Data.Property with(index([IX_Property_Property]))
-  where 
-    (PropertyID = Data.GetPropertyID('22-rdf-syntax-ns#type_label')) and
-    (TextValue = 'philosopher')
+    Data.GetEntityProperties('22-rdf-syntax-ns#type_label')
+  where
+    (Value = 'philosopher')
+
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-create function [Data].[Predicate_IsPoet]()
+CREATE function[Data].[Predicate_IsPoet]()
 returns table
 as
 return
-  select distinct
+  select
     EntityID
   from 
-    Data.Property with(index([IX_Property_Property]))
-  where 
-    (PropertyID = Data.GetPropertyID('22-rdf-syntax-ns#type')) and
-    (TextValue = 'http://dbpedia.org/ontology/Poet')
+    Data.GetEntityProperties('22-rdf-syntax-ns#type')
+  where
+    (Value = 'http://dbpedia.org/ontology/Poet')
+
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE function [Data].[Predicate_IsPolitician]()
+CREATE function[Data].[Predicate_IsPolitician]()
 returns table
 as
 return
-  select distinct
+  select
     EntityID
   from
-    Data.Property
-  where
-    PropertyID = Data.GetPropertyID('22-rdf-syntax-ns#type_label')
-	and TextValue like '%Politician%'
+    Data.GetEntityProperties('22-rdf-syntax-ns#type_label')
+	where
+    Value like '%Politician%'
+
 
 GO
 SET ANSI_NULLS ON
@@ -1254,214 +1256,213 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-create function [Data].[Predicate_IsPope]()
+CREATE function[Data].[Predicate_IsPope]()
 returns table
 as
 return
-  select distinct
+  select
     EntityID
   from 
-    Data.Property with(index([IX_Property_Property]))
-  where 
-    (PropertyID = Data.GetPropertyID('22-rdf-syntax-ns#type')) and
-    (TextValue = 'http://dbpedia.org/ontology/Pope')
+    Data.GetEntityProperties('22-rdf-syntax-ns#type')
+  where
+    (Value = 'http://dbpedia.org/ontology/Pope')
+
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create function [Data].[Predicate_IsPracticingMartialArts]()
+CREATE function[Data].[Predicate_IsPracticingMartialArts]()
 returns table
 as
 return
-  select distinct
+  select
     EntityID
   from
-    Data.Property 
+    Data.GetEntityProperties('22-rdf-syntax-ns#type_label')
   where
-    PropertyID = Data.GetPropertyID('22-rdf-syntax-ns#type_label')
-	and TextValue like '%Practitioners%'
+	  Value like '%Practitioners%'
+
 
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE function [Data].[Predicate_IsPresident]()
+CREATE function[Data].[Predicate_IsPresident]()
 returns table
 as
 return
-  select distinct
+  select
     EntityID
   from 
-    Data.Property with(index([IX_Property_Property]))
-  where 
-    (PropertyID = Data.GetPropertyID('22-rdf-syntax-ns#type_label')) and
-    (TextValue like '%President%')
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE function [Data].[Predicate_IsPrimeMinister]()
-returns table
-as
-return
-  select distinct
-    EntityID
-  from 
-    Data.Property with(index([IX_Property_Property]))
-  where 
-    (PropertyID = Data.GetPropertyID('22-rdf-syntax-ns#type_label')) and
-    (TextValue like 'PrimeMinister%')
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-create function [Data].[Predicate_IsRacingDriver]()
-returns table
-as
-return
-  select distinct
-    EntityID
-  from 
-    Data.Property with(index([IX_Property_Property]))
-  where 
-    (PropertyID = Data.GetPropertyID('22-rdf-syntax-ns#type_label')) and
-    (TextValue = 'racing driver')
+    Data.GetEntityProperties('22-rdf-syntax-ns#type_label')
+  where
+    (Value like '%President%')
 
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create function [Data].[Predicate_IsReligious]()
+CREATE function[Data].[Predicate_IsPrimeMinister]()
 returns table
 as
 return
-  select distinct
+  select
+    EntityID
+  from 
+    Data.GetEntityProperties('22-rdf-syntax-ns#type_label')
+  where
+    (Value like 'PrimeMinister%')
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE function[Data].[Predicate_IsRacingDriver]()
+returns table
+as
+return
+  select
+    EntityID
+  from 
+    Data.GetEntityProperties('22-rdf-syntax-ns#type_label')
+  where
+    (Value = 'racing driver')
+
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE function[Data].[Predicate_IsReligious]()
+returns table
+as
+return
+  select
     EntityID
   from
-    Data.Property
-  where
-    PropertyID = Data.GetPropertyID('religion_label')
+    Data.GetEntityProperties('religion_label')
   group by 
     EntityID
 
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-create function [Data].[Predicate_IsRugbyPlayer]()
-returns table
-as
-return
-  select distinct
-    EntityID
-  from 
-    Data.Property with(index([IX_Property_Property]))
-  where 
-    (PropertyID = Data.GetPropertyID('22-rdf-syntax-ns#type_label')) and
-    (TextValue = 'rugby player')
 
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create function [Data].[Predicate_IsSaint]()
+CREATE function[Data].[Predicate_IsRugbyPlayer]()
 returns table
 as
 return
-  select distinct
+  select
     EntityID
   from 
-    Data.Property with(index([IX_Property_Property]))
-  where 
-    (PropertyID = Data.GetPropertyID('22-rdf-syntax-ns#type')) and
-    (TextValue = 'http://dbpedia.org/ontology/Saint')
+    Data.GetEntityProperties('22-rdf-syntax-ns#type_label')
+  where
+    (Value = 'rugby player')
+
+
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE function [Data].[Predicate_IsScientist]()
+CREATE function[Data].[Predicate_IsSaint]()
 returns table
 as
 return
-  select distinct
+  select
     EntityID
   from 
-    Data.Property with(index([IX_Property_Property]))
-  where 
-    (PropertyID = Data.GetPropertyID('22-rdf-syntax-ns#type_label')) and
-    (TextValue like '%Scientist%')
+    Data.GetEntityProperties('22-rdf-syntax-ns#type')
+  where
+    (Value = 'http://dbpedia.org/ontology/Saint')
+
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE function [Data].[Predicate_IsSinger]()
+CREATE function[Data].[Predicate_IsScientist]()
 returns table
 as
 return
-  select distinct
+  select
+    EntityID
+  from 
+    Data.GetEntityProperties('22-rdf-syntax-ns#type_label')
+  where
+    (Value like '%Scientist%')
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE function[Data].[Predicate_IsSinger]()
+returns table
+as
+return
+  select
     EntityID
   from
-    Data.Property
+    Data.GetEntityProperties('22-rdf-syntax-ns#type_label')
   where
-    (PropertyID = Data.GetPropertyID('22-rdf-syntax-ns#type_label')) and
-    (TextValue like '%Singer%')
+    (Value like '%Singer%')
+
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE function [Data].[Predicate_IsSoapCharacter]()
+CREATE function[Data].[Predicate_IsSoapCharacter]()
 returns table
 as
 return
-  select distinct
+  select
     EntityID
   from 
-    Data.Property with(index([IX_Property_Property]))
-  where 
-    (PropertyID = Data.GetPropertyID('22-rdf-syntax-ns#type_label')) and
-    (TextValue = 'soap character')
+    Data.GetEntityProperties('22-rdf-syntax-ns#type_label')
+  where
+    (Value = 'soap character')
+
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create function [Data].[Predicate_IsSportManager]()
+CREATE function[Data].[Predicate_IsSportManager]()
 returns table
 as
 return
-  select distinct
+  select
     EntityID
   from 
-    Data.Property with(index([IX_Property_Property]))
-  where 
-    (PropertyID = Data.GetPropertyID('22-rdf-syntax-ns#type_label')) and
-    (TextValue in ('sports manager', 'soccer manager'))
+    Data.GetEntityProperties('22-rdf-syntax-ns#type_label')
+  where
+    (Value in ('sports manager', 'soccer manager'))
+
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create function [Data].[Predicate_IsSwimmer]()
+CREATE function[Data].[Predicate_IsSwimmer]()
 returns table
 as
 return
-  select distinct
+  select
     EntityID
   from 
-    Data.Property with(index([IX_Property_Property]))
-  where 
-    (PropertyID = Data.GetPropertyID('22-rdf-syntax-ns#type_label')) and
-    (TextValue = 'swimmer')
+    Data.GetEntityProperties('22-rdf-syntax-ns#type_label')
+  where
+    (Value = 'swimmer')
+
 
 GO
 SET ANSI_NULLS ON
@@ -1469,67 +1470,53 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE function [Data].[Predicate_IsTall]()
+CREATE function[Data].[Predicate_IsTall]()
 returns table
 as
 return
-  select distinct
+  select
     EntityID
   from
-    Data.Property
+    Data.GetEntityProperties('height')
+    cross apply
+    (
+      select try_cast(Value as money) DecimalValue
+    ) V
   where
-    (PropertyID = Data.GetPropertyID('height')) and
     (iif(DecimalValue < 3, DecimalValue * 100, DecimalValue) >= 185)
+
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create function [Data].[Predicate_IsTelevisionTalkShowHosts]()
-returns table
-as
-return
-  select distinct
-    EntityID
-  from 
-    Data.Property with(index([IX_Property_Property]))
-  where 
-    (PropertyID = Data.GetPropertyID('22-rdf-syntax-ns#type_label')) and
-    (TextValue like '%TelevisionTalkShowHosts%')
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-create function [Data].[Predicate_IsWorkingOnFriday]()
+CREATE function[Data].[Predicate_IsTelevisionTalkShowHosts]()
 returns table
 as
 return
   select
     EntityID
   from 
-    Data.Property with(index([IX_Property_Property]))
-  where 
-    (PropertyID = Data.GetPropertyID('OpenOnFriday')) and
-    (TextValue in (N'כן', 'yes', 'true', '1'))
-
+    Data.GetEntityProperties('22-rdf-syntax-ns#type_label')
+  where
+    (Value like '%TelevisionTalkShowHosts%')
 
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create function [Data].[Predicate_IsWorkingOnSaturday]()
+CREATE function[Data].[Predicate_IsWorkingOnFriday]()
 returns table
 as
 return
   select
     EntityID
   from 
-    Data.Property with(index([IX_Property_Property]))
-  where 
-    (PropertyID = Data.GetPropertyID('OpenOnSaturday')) and
-    (TextValue in (N'כן', 'yes', 'true', '1'))
+    Data.GetEntityProperties('OpenOnFriday')
+  where
+    (Value in (N'כן', 'yes', 'true', '1'))
+
 
 
 GO
@@ -1537,54 +1524,74 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE function [Data].[Predicate_IsWriter]()
-returns table
-as
-return
-  select distinct
-    EntityID
-  from 
-    Data.Property with(index([IX_Property_Property]))
-  where 
-    (PropertyID = Data.GetPropertyID('22-rdf-syntax-ns#type_label')) and
-    (TextValue = 'writer')
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE function [Data].[Predicate_Location]()
+CREATE function[Data].[Predicate_IsWorkingOnSaturday]()
 returns table
 as
 return
   select
     EntityID
   from 
-    Data.Property
-  where 
-    PropertyID in (Data.GetPropertyID('nationality_label'), Data.GetPropertyID('birthPlace_label'))
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-create function [Data].[Predicate_Sex]()
-returns table
-as
-return
-  select
-    EntityID
-  from 
-    Data.Property
-  where 
-    PropertyID = Data.GetPropertyID('gender_label')
+    Data.GetEntityProperties('OpenOnSaturday')
+  where
+    (Value in (N'כן', 'yes', 'true', '1'))
+
 
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create function [Data].[Predicate_WasBornInAfrica]()
+CREATE function[Data].[Predicate_IsWriter]()
+returns table
+as
+return
+  select
+    EntityID
+  from 
+    Data.GetEntityProperties('22-rdf-syntax-ns#type_label')
+  where
+    (Value = 'writer')
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE function[Data].[Predicate_Location]()
+returns table
+as
+return
+  select
+    EntityID
+  from
+    Data.GetEntityProperties('nationality_label')
+  union all
+  select
+    EntityID
+  from 
+    Data.GetEntityProperties('birthPlace_label')
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE function[Data].[Predicate_Sex]()
+returns table
+as
+return
+  select
+    EntityID
+  from 
+    Data.GetEntityProperties('gender_label')
+
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE function[Data].[Predicate_WasBornInAfrica]()
 returns table
 as
 return
@@ -1596,43 +1603,38 @@ return
     --PredicateID in (Data.GetPredicateID('WasBornInBrazil'), Data.GetPredicateID('WasBornInArgentina'));
     1 = 0
 
-    
-  
-  
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE function[Data].[Predicate_WasBornInArgentina]()
+returns table
+as
+return
+  select
+    EntityID
+  from
+    Data.GetEntityProperties('birthPlace_label')
+	where
+    Value = 'Argentina'
+
 
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create function [Data].[Predicate_WasBornInArgentina]()
+CREATE function[Data].[Predicate_WasBornInAustraliaOrNewZeland]()
 returns table
 as
 return
-  select distinct
+  select
     EntityID
   from
-    Data.Property
-  where
-    PropertyID = Data.GetPropertyID('birthPlace_label')
-	and TextValue = 'Argentina'
-
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-create function [Data].[Predicate_WasBornInAustraliaOrNewZeland]()
-returns table
-as
-return
-  select distinct
-    EntityID
-  from
-    Data.Property
-  where
-    PropertyID = Data.GetPropertyID('birthPlace_label')
-	and TextValue in (
+    Data.GetEntityProperties('birthPlace_label')
+	where
+    Value in (
 'Australia',
 'Victoria (Australia)',
 'Western Australia',
@@ -1641,67 +1643,68 @@ return
 	
 	)
 
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-create function [Data].[Predicate_WasBornInBrazil]()
-returns table
-as
-return
-  select distinct
-    EntityID
-  from
-    Data.Property
-  where
-    PropertyID = Data.GetPropertyID('birthPlace_label')
-	and TextValue = 'Brazil'
 
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create function [Data].[Predicate_WasBornInCanada]()
+CREATE function[Data].[Predicate_WasBornInBrazil]()
 returns table
 as
 return
-  select distinct
+  select
     EntityID
   from
-    Data.Property
-  where
-    PropertyID = Data.GetPropertyID('birthPlace_label')
-	and TextValue = 'Canada'
+    Data.GetEntityProperties('birthPlace_label')
+	where
+    Value = 'Brazil'
+
 
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create function [Data].[Predicate_WasBornInChina]()
+CREATE function[Data].[Predicate_WasBornInCanada]()
 returns table
 as
 return
-  select distinct
+  select
     EntityID
   from
-    Data.Property
-  where
-    PropertyID = Data.GetPropertyID('birthPlace_label')
-	and TextValue in (
+    Data.GetEntityProperties('birthPlace_label')
+	where
+    Value = 'Canada'
+
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE function[Data].[Predicate_WasBornInChina]()
+returns table
+as
+return
+  select
+    EntityID
+  from
+    Data.GetEntityProperties('birthPlace_label')
+	where
+    Value in (
 'China',
 'Republic of China (1912GÇô49)',
 'Mainland China'
 	)
 
+
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create function [Data].[Predicate_WasBornInFarEast]()
+CREATE function[Data].[Predicate_WasBornInFarEast]()
 returns table
 as
 return
@@ -1717,140 +1720,141 @@ return
         Data.GetPredicateID('WasBornInChina')
       );
   
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-create function [Data].[Predicate_WasBornInFrance]()
-returns table
-as
-return
-  select distinct
-    EntityID
-  from
-    Data.Property
-  where
-    PropertyID = Data.GetPropertyID('birthPlace_label')
-	and TextValue = 'France'
 
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create function [Data].[Predicate_WasBornInGermany]()
+CREATE function[Data].[Predicate_WasBornInFrance]()
 returns table
 as
 return
-  select distinct
+  select
     EntityID
   from
-    Data.Property
-  where
-    PropertyID = Data.GetPropertyID('birthPlace_label')
-	and TextValue in
+    Data.GetEntityProperties('birthPlace_label')
+	where
+    Value = 'France'
+
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE function[Data].[Predicate_WasBornInGermany]()
+returns table
+as
+return
+  select
+    EntityID
+  from
+    Data.GetEntityProperties('birthPlace_label')
+	where
+    Value in
 	(
 	 'Germany',
 	 'West Germany',
 	 'East Germany'
 	)
 
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-create function [Data].[Predicate_WasBornInIndia]()
-returns table
-as
-return
-  select distinct
-    EntityID
-  from
-    Data.Property
-  where
-    PropertyID = Data.GetPropertyID('birthPlace_label')
-	and TextValue in ('India', 'Presidencies and provinces of British India')
 
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create function [Data].[Predicate_WasBornInIsrael]()
+CREATE function[Data].[Predicate_WasBornInIndia]()
 returns table
 as
 return
-  select distinct
+  select
     EntityID
   from
-    Data.Property
-  where
-    PropertyID = Data.GetPropertyID('birthPlace_label')
-	and TextValue = 'Israel'
+    Data.GetEntityProperties('birthPlace_label')
+	where
+    Value in ('India', 'Presidencies and provinces of British India')
+
 
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create function [Data].[Predicate_WasBornInItaly]()
+CREATE function[Data].[Predicate_WasBornInIsrael]()
 returns table
 as
 return
-  select distinct
+  select
     EntityID
   from
-    Data.Property
-  where
-    PropertyID = Data.GetPropertyID('birthPlace_label')
-	and TextValue = 'Italy'
+    Data.GetEntityProperties('birthPlace_label')
+	where
+    Value = 'Israel'
+
 
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create function [Data].[Predicate_WasBornInJapan]()
+CREATE function[Data].[Predicate_WasBornInItaly]()
 returns table
 as
 return
-  select distinct
+  select
     EntityID
   from
-    Data.Property
-  where
-    PropertyID = Data.GetPropertyID('birthPlace_label')
-	and TextValue = 'Japan'
+    Data.GetEntityProperties('birthPlace_label')
+	where
+    Value = 'Italy'
+
 
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create function [Data].[Predicate_WasBornInKorea]()
+CREATE function[Data].[Predicate_WasBornInJapan]()
 returns table
 as
 return
-  select distinct
+  select
     EntityID
   from
-    Data.Property
-  where
-    PropertyID = Data.GetPropertyID('birthPlace_label')
-	and TextValue in (
+    Data.GetEntityProperties('birthPlace_label')
+	where
+    Value = 'Japan'
+
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE function[Data].[Predicate_WasBornInKorea]()
+returns table
+as
+return
+  select
+    EntityID
+  from
+    Data.GetEntityProperties('birthPlace_label')
+	where
+    Value in (
 'South Korea',
 'North Korea',
 'Korea'
 	)
 
+
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create function [Data].[Predicate_WasBornInMidleEast]()
+CREATE function[Data].[Predicate_WasBornInMidleEast]()
 returns table
 as
 return
@@ -1865,29 +1869,30 @@ return
         Data.GetPredicateID('WasBornInTurkey')
       );
 
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-create function [Data].[Predicate_WasBornInNetherlands]()
-returns table
-as
-return
-  select distinct
-    EntityID
-  from
-    Data.Property
-  where
-    PropertyID = Data.GetPropertyID('birthPlace_label')
-	and TextValue = 'Netherlands'
 
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create function [Data].[Predicate_WasBornInNorthAmerica]()
+CREATE function[Data].[Predicate_WasBornInNetherlands]()
+returns table
+as
+return
+  select
+    EntityID
+  from
+    Data.GetEntityProperties('birthPlace_label')
+	where
+    Value = 'Netherlands'
+
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE function[Data].[Predicate_WasBornInNorthAmerica]()
 returns table
 as
 return
@@ -1897,59 +1902,59 @@ return
     Data.Predicate
   where
     PredicateID in (Data.GetPredicateID('WasBornInUSA'), Data.GetPredicateID('WasBornInCanada'));
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-create function [Data].[Predicate_WasBornInPoland]()
-returns table
-as
-return
-  select distinct
-    EntityID
-  from
-    Data.Property
-  where
-    PropertyID = Data.GetPropertyID('birthPlace_label')
-	and TextValue = 'Poland'
 
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create function [Data].[Predicate_WasBornInRussia]()
-returns table
-as
-return
-  select distinct
-    EntityID
-  from
-    Data.Property
-  where
-    PropertyID = Data.GetPropertyID('birthPlace_label')
-	and TextValue in (
-'Russia',
-'Russian Empire'
-	)
-
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-create function [Data].[Predicate_WasBornInRussiaOrInSovietUnion]()
+CREATE function[Data].[Predicate_WasBornInPoland]()
 returns table
 as
 return
   select
     EntityID
   from
-    Data.Property
-  where
-    PropertyID = Data.GetPropertyID('birthPlace_label')
-	and TextValue in (
+    Data.GetEntityProperties('birthPlace_label')
+	where
+    Value = 'Poland'
+
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE function[Data].[Predicate_WasBornInRussia]()
+returns table
+as
+return
+  select
+    EntityID
+  from
+    Data.GetEntityProperties('birthPlace_label')
+	where
+    Value in (
+'Russia',
+'Russian Empire'
+	)
+
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE function[Data].[Predicate_WasBornInRussiaOrInSovietUnion]()
+returns table
+as
+return
+  select
+    EntityID
+  from
+    Data.GetEntityProperties('birthPlace_label')
+	where
+    Value in (
 'Russia',
 'Russian Empire',
 'Soviet Union',
@@ -1987,12 +1992,13 @@ return
 'Yakut Autonomous Soviet Socialist Republic'
 	)
 
+
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create function [Data].[Predicate_WasBornInSouthAmerica]()
+CREATE function[Data].[Predicate_WasBornInSouthAmerica]()
 returns table
 as
 return
@@ -2007,22 +2013,22 @@ return
   
   
 
+
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create function [Data].[Predicate_WasBornInSovietUnion]()
+CREATE function[Data].[Predicate_WasBornInSovietUnion]()
 returns table
 as
 return
-  select distinct
+  select
     EntityID
   from
-    Data.Property
-  where
-    PropertyID = Data.GetPropertyID('birthPlace_label')
-	and TextValue in (
+    Data.GetEntityProperties('birthPlace_label')
+	where
+    Value in (
 'Soviet Union',
 'Russian Soviet Federative Socialist Republic',
 'Ukrainian Soviet Socialist Republic',
@@ -2058,73 +2064,73 @@ return
 'Yakut Autonomous Soviet Socialist Republic'
 	)
 
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-create function [Data].[Predicate_WasBornInSpain]()
-returns table
-as
-return
-  select distinct
-    EntityID
-  from
-    Data.Property
-  where
-    PropertyID = Data.GetPropertyID('birthPlace_label')
-	and TextValue = 'Spain'
 
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create function [Data].[Predicate_WasBornInSweden]()
+CREATE function[Data].[Predicate_WasBornInSpain]()
 returns table
 as
 return
-  select distinct
+  select
     EntityID
   from
-    Data.Property
-  where
-    PropertyID = Data.GetPropertyID('birthPlace_label')
-	and TextValue = 'Sweden'
+    Data.GetEntityProperties('birthPlace_label')
+	where
+    Value = 'Spain'
+
 
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create function [Data].[Predicate_WasBornInTurkey]()
+CREATE function[Data].[Predicate_WasBornInSweden]()
 returns table
 as
 return
-  select distinct
+  select
     EntityID
   from
-    Data.Property
-  where
-    PropertyID = Data.GetPropertyID('birthPlace_label')
-	and TextValue = 'Turkey'
+    Data.GetEntityProperties('birthPlace_label')
+	where
+    Value = 'Sweden'
+
 
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create function [Data].[Predicate_WasBornInUnitedKingdomOrIreland]()
+CREATE function[Data].[Predicate_WasBornInTurkey]()
 returns table
 as
 return
-  select distinct
+  select
     EntityID
   from
-    Data.Property
-  where
-    PropertyID = Data.GetPropertyID('birthPlace_label')
-	and TextValue in (
+    Data.GetEntityProperties('birthPlace_label')
+	where
+    Value = 'Turkey'
+
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE function[Data].[Predicate_WasBornInUnitedKingdomOrIreland]()
+returns table
+as
+return
+  select
+    EntityID
+  from
+    Data.GetEntityProperties('birthPlace_label')
+	where
+    Value in (
 		'United Kingdom',
 		'United Kingdom of Great Britain and Ireland',
 		'England',
@@ -2134,29 +2140,30 @@ return
 		'Northern Ireland'
 	)
 
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-create function [Data].[Predicate_WasBornInUSA]()
-returns table
-as
-return
-  select distinct
-    EntityID
-  from
-    Data.Property
-  where
-    PropertyID = Data.GetPropertyID('birthPlace_label')
-	and TextValue = 'United States'
 
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create function [Data].[Predicate_WasBornInWesternMiddleOrNorthEurope]()
+CREATE function[Data].[Predicate_WasBornInUSA]()
+returns table
+as
+return
+  select
+    EntityID
+  from
+    Data.GetEntityProperties('birthPlace_label')
+	where
+    Value = 'United States'
+
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE function[Data].[Predicate_WasBornInWesternMiddleOrNorthEurope]()
 returns table
 as
 return
