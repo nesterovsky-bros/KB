@@ -13,7 +13,7 @@
 <blockquote>Preprocessor.exe {encoding} {path to person.cvs} {path to output folder}</blockquote>
 <p>where</p>
 <ul>
-  <li>{encoding} - cvs's file encoding; place there 1252.</li>
-  <li>{path to person.cvs} - path to input cvs file.</li>
-  <li>{path to output folder} - path to output folder.</li>
+  <li><code>{encoding}</code> - cvs's file encoding; place there 1252.</li>
+  <li><code>{path to person.cvs}</code> - path to input cvs file.</li>
+  <li><code>{path to output folder}</code> - path to output folder.</li>
 </ul>
