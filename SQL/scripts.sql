@@ -115,7 +115,7 @@ begin
     select
       @take Take,
       (
-        select
+        select top 1
           PropertyID
         from
           Data.PropertyType
@@ -300,7 +300,7 @@ else
     )
     else
     (
-      <sql>coalesce(P.TextValue, cast(P.IntegerValue as nvarchar(4000)), cast(P.DecimalValue as nvarchar(4000)), cast(P.DateValue as nvarchar(4000))) Value</sql>
+      <sql>P.Value</sql>
     )
   }
 from
@@ -900,11 +900,11 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [Data].[PredicateTree](
-	[ID] [int] NOT NULL CONSTRAINT [DF_PredicateTree_ID]  DEFAULT (NEXT VALUE FOR [Data].[PredicateTreeID]),
+	[ID] [int] NOT NULL,
 	[ParentID] [int] NOT NULL,
 	[Answer] [decimal](2, 1) NOT NULL,
 	[PredicateID] [hierarchyid] NULL,
-	[Populated] [bit] NOT NULL CONSTRAINT [DF_PredicateTree_Populated]  DEFAULT ((0)),
+	[Populated] [bit] NOT NULL,
  CONSTRAINT [PK_PredicateTree] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
@@ -938,11 +938,8 @@ GO
 CREATE TABLE [Data].[Property](
 	[EntityID] [int] NOT NULL,
 	[PropertyID] [int] NOT NULL,
-	[IntegerValue] [int] NULL,
-	[DecimalValue] [money] NULL,
-	[DateValue] [datetime2](7) NULL,
-	[TextValue] [nvarchar](4000) NULL
-) ON [PRIMARY]
+	[Value] [nvarchar](max) NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
 CREATE CLUSTERED INDEX [IX_Property_Property] ON [Data].[Property]
@@ -958,13 +955,31 @@ GO
 CREATE TABLE [Data].[PropertyType](
 	[PropertyID] [int] NOT NULL,
 	[Name] [nvarchar](128) NOT NULL,
-	[Description] [nvarchar](256) NULL,
-	[Type] [nvarchar](16) NOT NULL,
+	[Type] [nvarchar](256) NOT NULL,
  CONSTRAINT [PK_PropertyType] PRIMARY KEY CLUSTERED 
 (
 	[PropertyID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE function [Data].[GetEntityProperties](@name nvarchar(128))
+returns table
+as
+return
+  select
+    P.*
+  from 
+    Data.PropertyType T
+    inner join
+    Data.Property P
+    on
+      (T.Name = @name) and
+      (T.PropertyID = P.PropertyID);
 
 GO
 SET ANSI_NULLS ON
@@ -1044,6 +1059,7 @@ group by
 
 
 
+
 GO
 SET ARITHABORT ON
 SET CONCAT_NULL_YIELDS_NULL ON
@@ -1090,11 +1106,10 @@ GO
 SET ANSI_PADDING ON
 
 GO
-CREATE UNIQUE NONCLUSTERED INDEX [IX_PropertyType] ON [Data].[PropertyType]
+CREATE NONCLUSTERED INDEX [IX_PropertyType] ON [Data].[PropertyType]
 (
 	[Name] ASC
-)
-INCLUDE ( 	[Type]) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
 SET ARITHABORT ON
 SET CONCAT_NULL_YIELDS_NULL ON
@@ -1124,6 +1139,10 @@ CREATE NONCLUSTERED INDEX [IX_PropertyEntities_EntityCount] ON [Data].[PropertyE
 	[EntityCount] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
+ALTER TABLE [Data].[PredicateTree] ADD  CONSTRAINT [DF_PredicateTree_ID]  DEFAULT (NEXT VALUE FOR [Data].[PredicateTreeID]) FOR [ID]
+GO
+ALTER TABLE [Data].[PredicateTree] ADD  CONSTRAINT [DF_PredicateTree_Populated]  DEFAULT ((0)) FOR [Populated]
+GO
 ALTER TABLE [Data].[Predicate]  WITH CHECK ADD  CONSTRAINT [FK_Predicate_Entity] FOREIGN KEY([EntityID])
 REFERENCES [Data].[Entity] ([EntityID])
 ON UPDATE CASCADE
@@ -1131,14 +1150,14 @@ ON DELETE CASCADE
 GO
 ALTER TABLE [Data].[Predicate] CHECK CONSTRAINT [FK_Predicate_Entity]
 GO
-ALTER TABLE [Data].[Property]  WITH CHECK ADD  CONSTRAINT [FK_Property_Entity] FOREIGN KEY([EntityID])
+ALTER TABLE [Data].[Property]  WITH NOCHECK ADD  CONSTRAINT [FK_Property_Entity] FOREIGN KEY([EntityID])
 REFERENCES [Data].[Entity] ([EntityID])
 ON UPDATE CASCADE
 ON DELETE CASCADE
 GO
 ALTER TABLE [Data].[Property] CHECK CONSTRAINT [FK_Property_Entity]
 GO
-ALTER TABLE [Data].[PropertyType]  WITH CHECK ADD  CONSTRAINT [CK_PropertyType_Type] CHECK  (([Type]='text' OR [Type]='date' OR [Type]='decimal' OR [Type]='integer'))
+ALTER TABLE [Data].[PropertyType]  WITH NOCHECK ADD  CONSTRAINT [CK_PropertyType_Type] CHECK  (([Type]='text' OR [Type]='date' OR [Type]='decimal' OR [Type]='integer'))
 GO
 ALTER TABLE [Data].[PropertyType] CHECK CONSTRAINT [CK_PropertyType_Type]
 GO
@@ -1931,3 +1950,5 @@ begin
         for xml auto, root('request')
       );
 end;
+
+GO
