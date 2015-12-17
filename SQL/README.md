@@ -33,4 +33,14 @@ select @result;
 <p>This returns the second offers like this:</p>
 <blockquote><pre>&lt;question name="IsFootballPlayer" /></pre></blockquote>
 
-<p>So, you will continue to and questions to request and fill answers until there is nothing to offer.</p>
+<p>So, you will continue to add questions to request and fill answers until there is nothing to offer.</p>
+<p>Once you descended to the last predicate, you can get entities matched:</p>
+<blockquote><pre>declare @params xml = '
+ &lt;request>
+   &lt;question name="IsLivingPerson" answer="1"/>
+   &lt;question name="IsFootballPlayer" answer="1"/>
+ &lt;/request>';
+
+declare @result xml;
+
+execute Data.GetEntities  @params = @params;</pre></blockquote>
