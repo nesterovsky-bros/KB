@@ -17,3 +17,14 @@
   <li><code>{path to person.cvs}</code> - path to input cvs file.</li>
   <li><code>{path to output folder}</code> - path to output folder.</li>
 </ul>
+<p>This step will run for 5 to 10 minutes.</p>
+<h4>Load data</h4>
+<p>At the next step we load persons into the database <a href="#bulk_insert.sql">bulk_insert.sql</a>.</p>
+<p>This is long running task, so be prepared it will work a hour of two.</p>
+<h4>Define predicates</h4>
+<p>Execut following scripts:</p>
+<ul>
+  <li><a href="predicate_functions.sql">predicate_functions.sql</a> - to define predefined predicates;</li>
+  <li><a href="predicates.sql">predicates.sql</a> - to populate <code>Data.PredicateType</code> (usually it's done with <code>execute Data.DefinePredicate</code>);</li>
+  <li><a href="invaliate_predicates.sql">invaliate_predicates.sql</a> - to refresh predicates in <code>Data.Predicate</code> (this is length step too);</li>
+</ul>
