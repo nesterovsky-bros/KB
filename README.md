@@ -110,27 +110,22 @@
 <blockquote><pre>create table Data.PropertyType
 (
   PropertyID int not null constraint PK_PropertyType primary key,
-  Name nvarchar(128) not null constraint IX_PropertyType unique,
-  Description nvarchar(256) null,
-  Type nvarchar(16) not null constraint CK_PropertyType_Type 
-    check(Type in ('text', 'date', 'decimal', 'integer'))
+  Name nvarchar(128) not null,
+  Type nvarchar(256) not null,
+  index IX_PropertyType(Name)
 );</pre></blockquote>
 <p>where</p>
 <ul>
   <li><code>PropertyID</code> - a unique property ID;</li>
-  <li><code>Name</code> - a unique property name;</li>
-  <li><code>Description</code> - a short property description;</li>
-  <li><code>Type</code> - a property type (either of <code>'text'</code>, <code>'date'</code>, <code>'decimal'</code>, <code>'integer'</code>).</li>
+  <li><code>Name</code> - a  property name;</li>
+  <li><code>Type</code> - a property type.</li>
 </ul>
 <p>Table Property defines object properties:</p>
 <blockquote><pre>create table Data.Property
 (
   EntityID int not null,
   PropertyID int not null,
-  IntegerValue int null,
-  DecimalValue money null,
-  DateValue datetime2(7) null,
-  TextValue nvarchar(4000) null,
+  Value nvarchar(4000) null,
   constraint FK_Property_Entity foreign key(EntityID)
     references Data.Entity(EntityID)
     on update cascade
@@ -142,10 +137,7 @@
 <ul>
   <li><code>EntityID</code> - is an entity reference;</li>
   <li><code>PropertyID</code> - refers to a preperty type;</li>
-  <li><code>IntegerValue</code> - optional an integer value;</li>
-  <li><code>DecimalValue</code> - optional decimal value;</li>
-  <li><code>DateValue</code> - optional date value;</li>
-  <li><code>TextValue</code> - optional text value.</li>
+  <li><code>Value</code> - a property value.</li>
 </ul>
 <p>Together we had a heated debate on whether <code>Data.Entity</code> is required at all, 
 and if it is required then it might worth to add more info (like name or description) to it.
