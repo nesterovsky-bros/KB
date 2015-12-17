@@ -83,7 +83,7 @@
 <ul>
   <li><code>PredicateID</code> - hierarchy ID that uniquely defines a predicate type.</li>
   <li><code>Name</code> - a unique predicate name in form: <code>'IsLivingPerson'</code>, <code>'IsMale'</code>, <code>'IsPolitician'</code>. Name can be seen as a question in human readable form.</li>
-  <li><code>Expression</code> - an sql source used to evaluate the predicate. Usually it is of the form: <code>Data.Predicate_IsLivingPerson()</code>. If <code>Computed = 0</code> then this source is used to populate <code>Data.Predicate</code> table; otherwise when <code>Computed = 1</code> this source is used every time to get entities to match the predicate.</li>
+  <li><code>Expression</code> - an sql source used to evaluate the predicate. Usually it is of the form: <code>Data.Predicate_IsLivingPerson()</code>. If <code>Computed = 0</code> then this source is used to populate <code>Data.Predicate</code> table; otherwise when <code>Computed = 1</code> this source is used every time to get entities that match the predicate.</li>
   <li><code>Computed</code> - indicates whether to store entities that match the predicate in <code>Data.Predicate</code> table (value is <code>0</code>), or to evaluate <code>Expression</code> each time a predicate is requested (value is <code>1</code>).</li>
   <li><code>ScopePredicateID</code> - if specified, then the value defines the scope of <code>PredicateID</code> is defined. (E.g. "IsMale", "IsFemale" predicates are defined not for all persons, but only for those having "Sex" property; in this case we define "Sex" preicate, and "IsMale", "IsFemale" refer to "Sex" as a scope.)</li>
   <li><code>Hidden</code> - indicates that the predicate should not be offered (value is <code>1</code>).</li>
