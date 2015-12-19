@@ -619,4 +619,4 @@ create procedure Data.GetEntities
 <p>Solution sources are published at <a href="https://github.com/nesterovsky-bros/KB">github.com/nesterovsky-bros/KB</a>.</p>
 <p>SQL Server scripts are found at <a href="https://github.com/nesterovsky-bros/KB/SQL">github.com/nesterovsky-bros/KB/SQL</a>.</p>
 <p>Steps to load DBpedia Persons data are described at <a href="https://github.com/nesterovsky-bros/KB/SQL/Persons">github.com/nesterovsky-bros/KB/SQL/Persons</a>.</p>
-<p>Thank you for your attentions.</p>
+<p>Thank you for your attention.</p>
