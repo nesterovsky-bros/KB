@@ -612,7 +612,7 @@ create procedure Data.GetEntities
   <li>Otherwise regular search is done, and results are cached into the <code>PredicateTree</code>.</li>
 </ol>
 <h4>Decision Tree</h4>
-<p>If you will look at caching from the other perspective, and will decide to cache all data in such tree, then it can be qualified as a decition tree. The data contained in such table will be enough to guess any person.</p>
+<p>If you will look at caching from other perspective, and will decide to cache all data in such tree, then it can be qualified as a decition tree. The data contained in such table will be enough to guess any person.</p>
 <h4>Play the search</h4>
 <p>We can guess a specific entity and start playing executing <code>Data.GetNextPredicates</code> iteratively and answering offered questions.</p>
 <p>This way we shall reach to the point where no more predicates are offered. This way procedures either localized a minimal subset of entities or found required entity itself.</p>
