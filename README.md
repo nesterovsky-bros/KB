@@ -10,7 +10,7 @@
 </ol>
 <p>In fact, the first might be required to teach the second, so we have decided to formalize the problem in terms of SQL, while still keeping in mind a neural network.</p>
 <h3>SQL solution</h3>
-<p>We have selected SQL Server as a databse to implement our solution. A similar implementation is possible in other SQL (DB2, Oracle, MySql, SQLite), or NoSQL databases. SQL Server's facilities have allowed us to implement the task as a pure T-SQL API.</p>
+<p>We have selected SQL Server as a database to implement our solution. A similar implementation is possible in other SQL (DB2, Oracle, MySql, SQLite), or NoSQL databases. SQL Server's facilities have allowed us to implement the task as a pure T-SQL API.</p>
 <h4>Concepts</h4>
 <p>The task can be defined as:"Guess an <b>entity</b> through a series of <b>predicates</b>".</p>
 <p>The database should contain following tables:</p>
