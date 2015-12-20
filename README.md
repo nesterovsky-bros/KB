@@ -574,7 +574,7 @@ create procedure Data.GetEntities
 </pre></blockquote>
 <p><code>Data.GetEntities</code> returns a set of entities with possible value of some property (like name or description).</p>
 <h4>Cache of results</h4>
-<p>At this point we could complete our explanation of the algorithm and its implementation, especially taking into account that performance over test data, which is more than 1.5 million of entities, are very good. Indeed, it take 100ms on average to build SQL, and from dozens milliseconds and up to 3 - 4 seconds to run the query. Execution plans look good, and there are no bottlenecks for scalability.</p>
+<p>At this point we could complete our explanation of the algorithm and its implementation, especially taking into account that performance over test data, which is more than 1.5 million of entities, is very good. Indeed, it take 100ms on average to build SQL, and from dozens milliseconds and up to 3 - 4 seconds to run the query. Execution plans look good, and there are no bottlenecks for scalability.</p>
 <p>But we have thought that we can do better! According to the algorithm there are just several best predicates on the top level; there are also not too many best predicates on the second level, and so on. We have estimated that we can cache different results for all requests, say, for up to ten or even more input predicates. This means that we can immediately give answers to different sets of inputs, and descend to a rather small set of remaining entities. On the remaining set, a regular, even non-cached, search works very fast.</p>
 <p>So, we will continue.</p>
 <h4>Caching implementation</h4>
