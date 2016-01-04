@@ -928,7 +928,7 @@ CREATE TABLE [Data].[PredicateType](
 (
 	[PredicateID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+) ON [PRIMARY]
 
 GO
 SET ANSI_NULLS ON
@@ -939,7 +939,7 @@ CREATE TABLE [Data].[Property](
 	[EntityID] [int] NOT NULL,
 	[PropertyID] [int] NOT NULL,
 	[Value] [nvarchar](4000) NULL
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+) ON [PRIMARY]
 
 GO
 CREATE CLUSTERED INDEX [IX_Property_Property] ON [Data].[Property]
@@ -1950,3 +1950,4 @@ begin
 end;
 
 GO
+
