@@ -10,6 +10,16 @@ CREATE SCHEMA [Metadata]
 GO
 CREATE XML SCHEMA COLLECTION [Data].[XmlTypes] AS N'<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"><xsd:element name="question" type="question" /><xsd:element name="request" type="request" /><xsd:complexType name="question"><xsd:complexContent><xsd:restriction base="xsd:anyType"><xsd:sequence /><xsd:attribute name="name" type="xsd:string" /><xsd:attribute name="answer" type="xsd:decimal" /></xsd:restriction></xsd:complexContent></xsd:complexType><xsd:complexType name="request"><xsd:complexContent><xsd:restriction base="xsd:anyType"><xsd:choice minOccurs="0" maxOccurs="unbounded"><xsd:element ref="question" /></xsd:choice></xsd:restriction></xsd:complexContent></xsd:complexType></xsd:schema>'
 GO
+
+CREATE SEQUENCE [Data].[EntityID] AS [int] START WITH 1
+GO
+
+CREATE SEQUENCE [Data].[PropertyID] AS [int] START WITH 1
+GO
+
+CREATE SEQUENCE [Data].[PredicateTreeID] AS [int] START WITH 1
+GO
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
