@@ -1167,10 +1167,6 @@ ON DELETE CASCADE
 GO
 ALTER TABLE [Data].[Property] CHECK CONSTRAINT [FK_Property_Entity]
 GO
-ALTER TABLE [Data].[PropertyType]  WITH NOCHECK ADD  CONSTRAINT [CK_PropertyType_Type] CHECK  (([Type]='text' OR [Type]='date' OR [Type]='decimal' OR [Type]='integer'))
-GO
-ALTER TABLE [Data].[PropertyType] CHECK CONSTRAINT [CK_PropertyType_Type]
-GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
