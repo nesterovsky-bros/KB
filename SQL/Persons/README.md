@@ -26,5 +26,5 @@
 <ul>
   <li><a href="predicate_functions.sql">predicate_functions.sql</a> - to define predefined predicates;</li>
   <li><a href="predicates.sql">predicates.sql</a> - to populate <code>Data.PredicateType</code> (usually it's done with <code>execute Data.DefinePredicate</code>);</li>
-  <li><a href="invaliate_predicates.sql">invaliate_predicates.sql</a> - to refresh predicates in <code>Data.Predicate</code> (this is length step too);</li>
+  <li><a href="invalidate_predicates.sql">invaliate_predicates.sql</a> - to refresh predicates in <code>Data.Predicate</code> (this is length step too);</li>
 </ul>
