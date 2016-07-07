@@ -22,7 +22,7 @@
 <p>At the next step we load persons into the database <a href="#bulk_insert.sql">bulk_insert.sql</a>.</p>
 <p>This is long running task, so be prepared it will work a hour of two.</p>
 <h4>Define predicates</h4>
-<p>Execut following scripts:</p>
+<p>Execute following scripts:</p>
 <ul>
   <li><a href="predicate_functions.sql">predicate_functions.sql</a> - to define predefined predicates;</li>
   <li><a href="predicates.sql">predicates.sql</a> - to populate <code>Data.PredicateType</code> (usually it's done with <code>execute Data.DefinePredicate</code>);</li>
