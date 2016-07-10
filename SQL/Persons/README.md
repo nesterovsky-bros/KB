@@ -17,7 +17,7 @@
   <li><code>{path to person.cvs}</code> - path to input cvs file.</li>
   <li><code>{path to output folder}</code> - path to output folder.</li>
 </ul>
-<p>This step will run for 5 to 10 minutes.</p>
+<p>This step will run from 5 to 10 minutes.</p>
 <h4>Load data</h4>
 <p>At the next step we load persons into the database <a href="#bulk_insert.sql">bulk_insert.sql</a>.</p>
 <p>This is long running task, so be prepared it will work a hour of two.</p>
