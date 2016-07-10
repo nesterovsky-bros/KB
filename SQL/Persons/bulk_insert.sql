@@ -9,3 +9,7 @@ bulk insert Data.PropertyType
 bulk insert Data.Property
   from '{path to output folder}\data.txt'
   with(batchsize = 100000, datafiletype = 'widechar');
+
+-- Populate entities
+insert into Data.Entity(EntityID)
+select distinct EntityID from Data.Property;
