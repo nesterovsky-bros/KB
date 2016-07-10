@@ -9,7 +9,6 @@ INSERT [Data].[PredicateType] ([PredicateID], [Name], [Expression], [Computed], 
 INSERT [Data].[PredicateType] ([PredicateID], [Name], [Expression], [Computed], [ScopePredicateID], [Hidden], [Imprecise]) VALUES (N'/6/', N'IsMilitary', N'Data.Predicate_IsMilitary() ', 0, NULL, 0, 0)
 INSERT [Data].[PredicateType] ([PredicateID], [Name], [Expression], [Computed], [ScopePredicateID], [Hidden], [Imprecise]) VALUES (N'/6/1/', N'IsOfficer', N'Data.Predicate_IsOfficer()', 0, NULL, 0, 0)
 INSERT [Data].[PredicateType] ([PredicateID], [Name], [Expression], [Computed], [ScopePredicateID], [Hidden], [Imprecise]) VALUES (N'/8/', N'IsFoodServingService', N'Data.Predicate_IsFoodServingService()', 1, NULL, 0, 0)
-INSERT [Data].[PredicateType] ([PredicateID], [Name], [Expression], [Computed], [ScopePredicateID], [Hidden], [Imprecise]) VALUES (N'/8/1/', N'IsKosher', N'Data.Predicate_IsKosher()', 0, NULL, 0, 0)
 INSERT [Data].[PredicateType] ([PredicateID], [Name], [Expression], [Computed], [ScopePredicateID], [Hidden], [Imprecise]) VALUES (N'/8/2/', N'HasChef', N'Data.Predicate_HasChef()', 0, NULL, 0, 0)
 INSERT [Data].[PredicateType] ([PredicateID], [Name], [Expression], [Computed], [ScopePredicateID], [Hidden], [Imprecise]) VALUES (N'/8/11/1/', N'IsWorkingOnFriday', N'Data.Predicate_IsWorkingOnFriday()', 0, NULL, 0, 0)
 INSERT [Data].[PredicateType] ([PredicateID], [Name], [Expression], [Computed], [ScopePredicateID], [Hidden], [Imprecise]) VALUES (N'/8/11/2/', N'IsWorkingOnSaturday', N'Data.Predicate_IsWorkingOnSaturday()', 0, NULL, 0, 0)
