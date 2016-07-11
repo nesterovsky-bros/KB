@@ -8,7 +8,7 @@
   <li>Metadata.txt - file containing property definitions;</li>
   <li>Data.txt - file containing properties for each person;</li>
 </ul>
-<p>Preprocessor is implemented as a simple C# program (see <a href="Processor">Preprocessor</a> project).</p>
+<p>Preprocessor is implemented as a simple C# program (see <a href="Processor">Preprocess</a> project).</p>
 <p>Preprocessor is run like this:</p>
 <blockquote>Preprocessor.exe {encoding} {path to person.csv} {path to output folder}</blockquote>
 <p>where</p>
