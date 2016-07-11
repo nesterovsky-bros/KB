@@ -5,7 +5,7 @@
 <p>We preprocess Person.csv before loading it into the database.</p>
 <p>Preprocessor outputs two files:</p>
 <ul>
-  <li>Properties.txt - file containing property definitions;</li>
+  <li>Metadata.txt - file containing property definitions;</li>
   <li>Data.txt - file containing properties for each person;</li>
 </ul>
 <p>Preprocessor is implemented as a simple C# program (see <a href="Processor">Preprocessor</a> project).</p>
