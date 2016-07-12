@@ -19,7 +19,7 @@
 </ul>
 <p>This step will run from 5 to 10 minutes.</p>
 <h4>Load data</h4>
-<p>At the next step we load persons into the database <a href="#bulk_insert.sql">bulk_insert.sql</a>.</p>
+<p>At the next step we load persons into the database <a href="bulk_insert.sql">bulk_insert.sql</a>.</p>
 <p>This is long running task, so be prepared it will work a hour of two.</p>
 <h4>Define predicates</h4>
 <p>Execute following scripts:</p>
