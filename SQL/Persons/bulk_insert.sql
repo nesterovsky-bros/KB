@@ -1,4 +1,4 @@
--- Note: {path to output folder} - is a folder where preprocessor output files.
+-- Note: {path to output folder} - is a folder where preprocessor outputs files.
 
 --set ansi_warings off
 
